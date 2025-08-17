@@ -1,2 +1,2 @@
 # MovieSearch
-Um desafio técnico utilizando a API TMDb
+Um projeto utilizando a API TMDb
