@@ -33,7 +33,7 @@
 		6F85A4712E4DF2B400109E9C /* Exceptions for "MovieSearch" folder in "MovieSearch" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				AppSetupFiles/Info.plist,
 			);
 			target = 6F85A4482E4DF2B200109E9C /* MovieSearch */;
 		};
@@ -51,11 +51,6 @@
 		6F85A4622E4DF2B400109E9C /* MovieSearchTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = MovieSearchTests;
-			sourceTree = "<group>";
-		};
-		6F85A46C2E4DF2B400109E9C /* MovieSearchUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = MovieSearchUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -90,7 +85,6 @@
 			children = (
 				6F85A44B2E4DF2B200109E9C /* MovieSearch */,
 				6F85A4622E4DF2B400109E9C /* MovieSearchTests */,
-				6F85A46C2E4DF2B400109E9C /* MovieSearchUITests */,
 				6F85A44A2E4DF2B200109E9C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -165,9 +159,6 @@
 			);
 			dependencies = (
 				6F85A46B2E4DF2B400109E9C /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				6F85A46C2E4DF2B400109E9C /* MovieSearchUITests */,
 			);
 			name = MovieSearchUITests;
 			packageProductDependencies = (
@@ -284,6 +275,8 @@
 /* Begin XCBuildConfiguration section */
 		6F85A4732E4DF2B400109E9C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 6F85A44B2E4DF2B200109E9C /* MovieSearch */;
+			baseConfigurationReferenceRelativePath = AppSetupFiles/Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -291,10 +284,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 85Y9Y93DEU;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MovieSearch/Info.plist;
+				INFOPLIST_FILE = MovieSearch/AppSetupFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -312,6 +304,8 @@
 		};
 		6F85A4742E4DF2B400109E9C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 6F85A44B2E4DF2B200109E9C /* MovieSearch */;
+			baseConfigurationReferenceRelativePath = AppSetupFiles/Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -319,10 +313,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 85Y9Y93DEU;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MovieSearch/Info.plist;
+				INFOPLIST_FILE = MovieSearch/AppSetupFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -340,6 +333,8 @@
 		};
 		6F85A4752E4DF2B400109E9C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 6F85A44B2E4DF2B200109E9C /* MovieSearch */;
+			baseConfigurationReferenceRelativePath = AppSetupFiles/Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -404,6 +399,8 @@
 		};
 		6F85A4762E4DF2B400109E9C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 6F85A44B2E4DF2B200109E9C /* MovieSearch */;
+			baseConfigurationReferenceRelativePath = AppSetupFiles/Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
