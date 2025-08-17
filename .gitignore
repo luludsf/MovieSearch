@@ -1,0 +1,4 @@
+# Gitignore
+
+# Ignore your API keys file
+Config.xcconfig
