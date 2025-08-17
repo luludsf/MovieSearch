@@ -7,10 +7,22 @@
 
 import Foundation
 
-enum MovieSearchRequest: MovieSearchBaseRequest {
+enum MovieSearchRequest {
     
     case movieSearch(query: String, page: Int?)
     case movieDetails(id: Int)
+    
+    var host: String {
+        "api.themoviedb.org"
+    }
+    
+    var scheme: String {
+        "https"
+    }
+    
+    var version: String {
+        "3"
+    }
     
     var method: HTTPMethod { .GET }
     
