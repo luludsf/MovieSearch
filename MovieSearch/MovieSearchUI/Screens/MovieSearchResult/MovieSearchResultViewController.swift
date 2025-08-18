@@ -32,6 +32,10 @@ class MovieSearchResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "\(viewModel.query)"
+        fetch()
+    }
+    
+    private func fetch() {
         self.contentView.updateState(.loading(true))
         viewModel.fetchSearchMovies(query: viewModel.query, page: nil)
     }
@@ -57,8 +61,8 @@ extension MovieSearchResultViewController: MoviesGridViewDelegate {
         viewModel.fetchSearchMovies(query: viewModel.query, page: nil)
     }
     
-    func didTapFavoriteButton(isFavorite: Bool, selectedMovie: Movie) {
-        viewModel.manageFavoriteMovie(isFavorite: isFavorite, selectedMovie: selectedMovie)
+    func didTapFavoriteButton(isFavorite: Bool, selectedMovie: Movie, completion: @escaping (Bool) -> Void) {
+        viewModel.manageFavoriteMovie(isFavorite: isFavorite, selectedMovie: selectedMovie, completion: completion)
     }
     
     func getFavorite(movie: Movie, completion: @escaping (Bool) -> Void) {
@@ -78,6 +82,12 @@ extension MovieSearchResultViewController: MoviesGridViewDelegate {
     }
     
     func openMovieDetails(with movieId: Int) {
-        viewModel.openMovieDetails(with: movieId)
+        viewModel.openMovieDetails(with: movieId, updateDelegate: self)
+    }
+}
+
+extension MovieSearchResultViewController: MovieSearchResultViewControllerUpdateDelegate {
+    func reloadView() {
+        fetch()
     }
 }

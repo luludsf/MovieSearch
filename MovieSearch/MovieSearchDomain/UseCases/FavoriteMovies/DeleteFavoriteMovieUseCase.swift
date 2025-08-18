@@ -13,8 +13,7 @@ class DeleteFavoriteMovieUseCase: DeleteFavoriteMovieUseCaseProtocol {
         self.repository = repository
     }
     
-    // TODO: VERIFICAR ERROR
-    func execute(_ movie: Movie) {
-        try? repository.deleteFavoriteMovie(movie)
+    func execute(_ movie: Movie, completion: @escaping (Bool) -> Void){
+        repository.deleteFavoriteMovie(movie, completion: completion)
     }
 }

@@ -9,7 +9,6 @@ import Foundation
 
 final class MovieSearchResultViewModel: MovieSearchResultViewModelProtocol {
 
-    // TODO: verificar se farei pull to refresh
     var query: String
     weak var coordinatorDelegate: CoordinatorDelegate?
     weak var delegate: MovieSearchResultViewModelDelegate?
@@ -68,17 +67,26 @@ final class MovieSearchResultViewModel: MovieSearchResultViewModelProtocol {
     }
     
     func fetchImageData(from url: String, shouldIgnoreCache: Bool, completion: @escaping (Data?) -> Void) {
-        movieImageDownloadUseCase.getMovieImage(from: url, with: imageType, shouldIgnoreCache: shouldIgnoreCache) { imageData in
-            completion(imageData)
-        }
+        
+        movieImageDownloadUseCase.getMovieImage(
+            from: url,
+            with: imageType,
+            shouldIgnoreCache: shouldIgnoreCache) { result in
+                switch result {
+                case .success(let imageData):
+                    completion(imageData)
+                case .failure:
+                    completion(nil)
+                }
+            }
     }
     
-    func openMovieDetails(with movieId: Int) {
-        coordinatorDelegate?.showMovieDetailsViewController(with: movieId)
+    func openMovieDetails(with movieId: Int, updateDelegate: MovieSearchResultViewControllerUpdateDelegate) {
+        coordinatorDelegate?.showMovieDetailsViewController(with: movieId, updateDelegate: updateDelegate)
     }
     
-    func manageFavoriteMovie(isFavorite: Bool, selectedMovie: Movie) {
-        favoritesManager.manageFavoriteMovie(isFavorite: isFavorite, selectedMovie: selectedMovie)
+    func manageFavoriteMovie(isFavorite: Bool, selectedMovie: Movie, completion: @escaping (Bool) -> Void) {
+        favoritesManager.manageFavoriteMovie(isFavorite: isFavorite, selectedMovie: selectedMovie, completion: completion)
     }
     
     func isFavoriteMovie(movie: Movie, completion: @escaping (Bool) -> Void) {

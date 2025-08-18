@@ -6,8 +6,8 @@
 //
 
 protocol FavoriteMoviesRepositoryProtocol {
-    func saveFavoriteMovie(_ movie: Movie)
-    func deleteFavoriteMovie(_ movie: Movie) throws
+    func saveFavoriteMovie(_ movie: Movie, completion: @escaping (Bool) -> Void)
+    func deleteFavoriteMovie(_ movie: Movie, completion: @escaping (Bool) -> Void)
     func fetchFavoriteMovie(id: Int, completion: @escaping (Bool) -> Void)
     func fetchAllFavoriteMovies(completion: @escaping ([Movie]?) -> Void)
 }

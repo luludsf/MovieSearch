@@ -1,14 +1,20 @@
 //
-//  FavoriteMovieService.swift
-//  MovieSearch
+//  FavoriteMovieService.swift
+//  MovieSearch
 //
-//  Created by Luana Duarte on 15/08/25.
+//  Created by Luana Duarte on 15/08/25.
 //
 
 import SwiftData
 import Foundation
+import OSLog
 
 class FavoriteMovieService: FavoriteMovieServiceProtocol {
+    
+    private static let logger = Logger(
+        subsystem: "luanaduarte.MovieSearch",
+        category: "FavoriteMovieService"
+    )
     
     private let modelContainer: ModelContainer?
     
@@ -16,32 +22,40 @@ class FavoriteMovieService: FavoriteMovieServiceProtocol {
         self.modelContainer = modelContainer
     }
     
-    func saveFavoriteMovie(_ movie: MovieObject) {
-        DispatchQueue.main.async {
+    func saveFavoriteMovie(_ movie: MovieObject, completion: @escaping (Bool) -> Void) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
             self.modelContainer?.mainContext.insert(movie)
             
             do {
                 try self.modelContainer?.mainContext.save()
-                print("Filme salvo com sucesso: \(movie.originalTitle ?? "")")
+                completion(true)
+                Self.logger.info("Filme salvo com sucesso: \(movie.originalTitle ?? "Título desconhecido", privacy: .private)")
             } catch {
-                print("Erro ao salvar o filme: \(error)")
+                completion(false)
+                Self.logger.error("Erro ao salvar o filme: \(error.localizedDescription)")
             }
         }
     }
     
-    func deleteFavoriteMovie(_ movie: MovieObject) {
+    func deleteFavoriteMovie(_ movie: MovieObject, completion: @escaping (Bool) -> Void) {
         let id = movie.id
         
         let predicate = #Predicate<MovieObject> { mv in
             mv.id == id
         }
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
             
-        DispatchQueue.main.async {
             do {
                 try self.modelContainer?.mainContext.delete(model: MovieObject.self, where: predicate)
-                print("Filme deletado com sucesso: \(movie.originalTitle ?? "")")
+                completion(true)
+                Self.logger.info("Filme deletado com sucesso: \(movie.originalTitle ?? "Título desconhecido", privacy: .private)")
             } catch {
-                print("Erro ao deletar o filme: \(error)")
+                completion(false)
+                Self.logger.error("Erro ao deletar o filme: \(error.localizedDescription)")
             }
         }
     }
@@ -55,23 +69,25 @@ class FavoriteMovieService: FavoriteMovieServiceProtocol {
         
         descriptor.fetchLimit = 1
         
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
             do {
                 let results = try self.modelContainer?.mainContext.fetch(descriptor)
                 let movieIsFavorite: Bool = !(results?.isEmpty ?? false)
                 completion(movieIsFavorite)
-                
             } catch {
-                print("Erro ao buscar filme por ID: \(error)")
+                Self.logger.error("Erro ao buscar filme por ID: \(error.localizedDescription)")
                 completion(false)
             }
         }
     }
     
     func fetchAllFavoriteMovies(completion: @escaping ([MovieObject]?) -> Void) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
             let descriptor = FetchDescriptor<MovieObject>(sortBy: [SortDescriptor(\.originalTitle)])
-            // TODO: VERIFICAR
             completion(try? self.modelContainer?.mainContext.fetch(descriptor))
         }
     }

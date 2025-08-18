@@ -6,5 +6,5 @@
 //
 
 protocol DeleteFavoriteMovieUseCaseProtocol {
-    func execute(_ movie: Movie)
+    func execute(_ movie: Movie, completion: @escaping (Bool) -> Void)
 }

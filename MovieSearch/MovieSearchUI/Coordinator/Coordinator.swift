@@ -48,8 +48,8 @@ extension Coordinator: CoordinatorDelegate {
         navigationController.pushViewController(resultsViewController, animated: true)
     }
     
-    func showMovieDetailsViewController(with movieId: Int) {
-        let movieDetailsViewController = factory.makeMovieDetailsViewController(movieId: movieId)
+    func showMovieDetailsViewController(with movieId: Int, updateDelegate: MovieSearchResultViewControllerUpdateDelegate) {
+        let movieDetailsViewController = factory.makeMovieDetailsViewController(movieId: movieId, updateDelegate: updateDelegate)
         navigationController.pushViewController(movieDetailsViewController, animated: true)
     }
 }

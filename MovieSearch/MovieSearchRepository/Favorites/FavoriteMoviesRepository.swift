@@ -13,7 +13,7 @@ final class FavoriteMoviesRepository: FavoriteMoviesRepositoryProtocol {
         self.service = service
     }
     
-    func saveFavoriteMovie(_ movie: Movie) {
+    func saveFavoriteMovie(_ movie: Movie, completion: @escaping (Bool) -> Void) {
         let movieObject = MovieObject(
             id: movie.id,
             originalTitle: movie.originalTitle,
@@ -26,11 +26,10 @@ final class FavoriteMoviesRepository: FavoriteMoviesRepositoryProtocol {
             budget: movie.budget,
             revenue: movie.revenue
         )
-        service.saveFavoriteMovie(movieObject)
+        service.saveFavoriteMovie(movieObject, completion: completion)
     }
     
-    // TODO: Fazer error handling do catch
-    func deleteFavoriteMovie(_ movie: Movie) throws {
+    func deleteFavoriteMovie(_ movie: Movie, completion: @escaping (Bool) -> Void) {
         let movieObject = MovieObject(
             id: movie.id,
             originalTitle: movie.originalTitle,
@@ -43,10 +42,9 @@ final class FavoriteMoviesRepository: FavoriteMoviesRepositoryProtocol {
             budget: movie.budget,
             revenue: movie.revenue
         )
-        try? service.deleteFavoriteMovie(movieObject)
+        service.deleteFavoriteMovie(movieObject, completion: completion)
     }
     
-    // TODO: Fazer error handling do catch
     func fetchAllFavoriteMovies(completion: @escaping ([Movie]?) -> Void) {
         service.fetchAllFavoriteMovies { moviesObject in
             let movies = moviesObject?.map {

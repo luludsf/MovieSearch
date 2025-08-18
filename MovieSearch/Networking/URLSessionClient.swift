@@ -70,6 +70,9 @@ final class URLSessionClient: Networking {
         urlRequest.httpMethod = request.method.rawValue
         urlRequest.allHTTPHeaderFields = request.headers
         urlRequest.timeoutInterval = 10
+        
+        // TODO: Verificar cache
+        
         urlRequest.cachePolicy = shouldIgnoreCache ? .reloadIgnoringLocalCacheData : .useProtocolCachePolicy
         
         if let bodyDict = request.bodyParams {

@@ -13,4 +13,5 @@ protocol MovieDetailViewProtocol: UIView {
     
     func updateImage(with data: Data?)
     func configure(with movie: Movie, isFavorite: Bool)
+    func showError(message: String)
 }

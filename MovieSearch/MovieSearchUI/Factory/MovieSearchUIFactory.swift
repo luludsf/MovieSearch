@@ -26,14 +26,15 @@ class MovieSearchUIFactory: MovieSearchUIFactoryProtocol {
         return FavoriteMoviesViewController(contentView: view, viewModel: viewModel)
     }
     
-    func makeMovieDetailsViewController(movieId: Int) -> MovieDetailsViewController {
+    func makeMovieDetailsViewController(movieId: Int, updateDelegate: MovieSearchResultViewControllerUpdateDelegate) -> MovieDetailsViewController {
         let viewModel = MovieDetailsViewModel(
             favoritesManager: movieSearchDomainFactory.makeFavoritesManagerProtocol(),
             movieDetailsUseCase: movieSearchDomainFactory.makeMovieDetailsUseCase(),
             movieImageDownloadUseCase: movieSearchDomainFactory.makeMovieImageDownloadUseCase(),
             movieId: movieId
         )
-
+        
+        viewModel.updateDelegate = updateDelegate
         let view = MovieDetailView()
         return MovieDetailsViewController(contentView: view, viewModel: viewModel)
     }

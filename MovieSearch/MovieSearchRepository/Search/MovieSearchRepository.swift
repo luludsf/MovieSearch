@@ -71,16 +71,16 @@ final class MovieSearchRepository: MovieSearchRepositoryProtocol {
         }
     }
     
-    func getMovieImage(from url: String, with imageType: ImageType, shouldIgnoreCache: Bool, completion: @escaping (Data?) -> Void) {
+    func getMovieImage(from url: String, with imageType: ImageType, shouldIgnoreCache: Bool, completion: @escaping (Result<Data?, MovieSearchError>) -> Void) {
         let request: MovieImageDownloadRequest = .movieImageDownload(url, imageType)
         
         networking.perform(request, shouldIgnoreCache: shouldIgnoreCache) { (result: Result<Data, NetworkingError>) in
             switch result {
             case.success(let imageData):
-                completion(imageData)
-            default:
-                // TODO: ERROR HANDLING
-                completion(nil)
+                completion(.success(imageData))
+            case .failure(let error):
+                let serviceError = self.mapNetworking(error)
+                completion(.failure(serviceError))
             }
         }
     }

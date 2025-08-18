@@ -13,7 +13,6 @@ class FetchFavoriteMovieUseCase: FetchFavoriteMovieUseCaseProtocol {
         self.repository = repository
     }
     
-    // TODO: VERIFICAR ERROR
     func execute(_ movieId: Int, completion: @escaping (Bool) -> Void) {
         repository.fetchFavoriteMovie(id: movieId, completion: completion)
     }

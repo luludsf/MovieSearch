@@ -25,6 +25,6 @@ protocol MovieSearchRepositoryProtocol {
         from url: String,
         with imageType: ImageType,
         shouldIgnoreCache: Bool,
-        completion: @escaping (Data?) -> Void
+        completion: @escaping (Result<Data?, MovieSearchError>) -> Void
     )
 }

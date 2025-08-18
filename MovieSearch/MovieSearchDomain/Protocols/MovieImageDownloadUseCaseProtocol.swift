@@ -8,5 +8,10 @@
 import Foundation
 
 protocol MovieImageDownloadUseCaseProtocol {
-    func getMovieImage(from url: String, with imageType: ImageType, shouldIgnoreCache: Bool, completion: @escaping (Data?) -> Void)
+    func getMovieImage(
+        from url: String,
+        with imageType: ImageType,
+        shouldIgnoreCache: Bool,
+        completion: @escaping (Result<Data?, MovieSearchError>) -> Void
+    )
 }

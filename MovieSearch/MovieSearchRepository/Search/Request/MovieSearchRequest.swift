@@ -7,8 +7,8 @@
 
 import Foundation
 
-enum MovieSearchRequest {
-    
+enum MovieSearchRequest: Request {
+
     case movieSearch(query: String, page: Int?)
     case movieDetails(id: Int)
     
@@ -47,5 +47,13 @@ enum MovieSearchRequest {
         default:
             return params
         }
+    }
+    
+    var headers: [String : String]? {
+        nil
+    }
+    
+    var bodyParams: [String : Any?]? {
+        nil
     }
 }

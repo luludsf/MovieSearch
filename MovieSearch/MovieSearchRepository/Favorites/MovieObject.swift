@@ -10,7 +10,8 @@ import SwiftData
 
 @Model
 final class MovieObject {
-    var id: Int
+    
+    @Attribute(.unique) var id: Int
     var originalTitle: String?
     var posterPath: String?
     var voteAverage: Double

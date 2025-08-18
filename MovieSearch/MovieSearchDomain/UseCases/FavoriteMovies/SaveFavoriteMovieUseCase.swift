@@ -13,8 +13,7 @@ class SaveFavoriteMovieUseCase: SaveFavoriteMovieUseCaseProtocol {
         self.repository = repository
     }
     
-    // TODO: VERIFICAR ERROR
-    func execute(_ movie: Movie) {
-        repository.saveFavoriteMovie(movie)
+    func execute(_ movie: Movie, completion: @escaping (Bool) -> Void) {
+        repository.saveFavoriteMovie(movie, completion: completion)
     }
 }

@@ -1,8 +1,8 @@
 //
-//  MovieDetailView.swift
-//  MovieSearch
+//  MovieDetailView.swift
+//  MovieSearch
 //
-//  Created by Luana Duarte on 17/08/25.
+//  Created by Luana Duarte on 17/08/25.
 //
 
 import UIKit
@@ -10,7 +10,7 @@ import UIKit
 class MovieDetailView: UIView, MovieDetailViewProtocol {
 
     weak var delegate: MovieDetailViewDelegate?
-    
+        
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -23,8 +23,6 @@ class MovieDetailView: UIView, MovieDetailViewProtocol {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 16
-        stackView.alignment = .fill
-        stackView.distribution = .fill
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -68,15 +66,35 @@ class MovieDetailView: UIView, MovieDetailViewProtocol {
         return button
     }()
     
+    private let errorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBackground
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
+        return view
+    }()
+    
+    private lazy var errorMessageLabel: UILabel = {
+        let label: UILabel = .init()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.font = .preferredFont(forTextStyle: .extraLargeTitle)
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
+        label.isHidden = true
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
+        setupErrorLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+        
     private func setupLayout() {
         backgroundColor = .systemBackground
         
@@ -84,7 +102,6 @@ class MovieDetailView: UIView, MovieDetailViewProtocol {
         scrollView.addSubview(contentStackView)
         
         addSubview(backdropImageView)
-        //addSubview(contentStackView)
         
         titleStackView.addArrangedSubview(titleLabel)
         titleStackView.addArrangedSubview(favoriteButton)
@@ -120,13 +137,32 @@ class MovieDetailView: UIView, MovieDetailViewProtocol {
         favoriteButton.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
     }
     
-    @objc private func didTapFavoriteButton() {
-        favoriteButton.isSelected.toggle()
-        delegate?.didTapFavoriteButton(isFavorite: favoriteButton.isSelected)
+    private func setupErrorLayout() {
+        addSubview(errorView)
+        errorView.addSubview(errorMessageLabel)
+        
+        NSLayoutConstraint.activate([
+            errorView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            errorView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            errorView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            errorView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            errorMessageLabel.centerXAnchor.constraint(equalTo: errorView.centerXAnchor),
+            errorMessageLabel.centerYAnchor.constraint(equalTo: errorView.centerYAnchor, constant: -20),
+            errorMessageLabel.leadingAnchor.constraint(equalTo: errorView.leadingAnchor, constant: 20),
+            errorMessageLabel.trailingAnchor.constraint(equalTo: errorView.trailingAnchor, constant: -20)
+        ])
     }
     
-    // MARK: - Configuração da View com o Modelo
-    
+    @objc private func didTapFavoriteButton() {
+        favoriteButton.isSelected.toggle()
+        delegate?.didTapFavoriteButton(isFavorite: favoriteButton.isSelected) { success in
+            if !success {
+                self.favoriteButton.isSelected.toggle()
+            }
+        }
+    }
+        
     func configure(with movie: Movie, isFavorite: Bool) {
         titleLabel.text = movie.title
         originalTitleLabel.text = "Original: \(movie.originalTitle ?? "N/A")"
@@ -153,6 +189,15 @@ class MovieDetailView: UIView, MovieDetailViewProtocol {
         formatter.currencySymbol = "$"
         formatter.maximumFractionDigits = 0
         return formatter.string(from: NSNumber(value: value)) ?? "N/A"
+    }
+        
+    func showError(message: String) {
+        scrollView.isHidden = true
+        backdropImageView.isHidden = true
+        
+        errorMessageLabel.text = message
+        errorMessageLabel.isHidden = false
+        errorView.isHidden = false
     }
 }
 

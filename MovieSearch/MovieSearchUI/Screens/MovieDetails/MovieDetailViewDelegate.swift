@@ -6,5 +6,5 @@
 //
 
 protocol MovieDetailViewDelegate: AnyObject {
-    func didTapFavoriteButton(isFavorite: Bool)
+    func didTapFavoriteButton(isFavorite: Bool, completion: @escaping (Bool) -> Void)
 }

@@ -73,9 +73,14 @@ extension FavoriteMoviesViewController: MoviesGridViewDelegate {
         viewModel.fetchFavoriteMovie(movieId: movie.id, completion: completion)
     }
     
-    func didTapFavoriteButton(isFavorite: Bool, selectedMovie: Movie) {
-        viewModel.deleteFavoriteMovie(selectedMovie)
-        fetchFavoriteMovies()
+    func didTapFavoriteButton(isFavorite: Bool, selectedMovie: Movie, completion: @escaping (Bool) -> Void) {
+        
+        viewModel.deleteFavoriteMovie(selectedMovie) { movieWasDeleted in
+            if movieWasDeleted {
+                self.fetchFavoriteMovies()
+            }
+            completion(movieWasDeleted)
+        }
     }
     
     func openMovieDetails(with movieId: Int) {

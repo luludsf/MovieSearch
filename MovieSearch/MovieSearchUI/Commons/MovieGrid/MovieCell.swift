@@ -16,8 +16,6 @@ class MovieCell: UICollectionViewCell {
     let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.alignment = .fill
-        stackView.distribution = .fill
         stackView.spacing = 8
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
@@ -131,7 +129,12 @@ class MovieCell: UICollectionViewCell {
     
     @objc private func didTapFavButton() {
         favoriteButton.isSelected.toggle()
+        isUserInteractionEnabled = false
         didTapFavoriteButton?(favoriteButton.isSelected)
+    }
+    
+    func enableUserInteraction() {
+        isUserInteractionEnabled = true
     }
     
     func configure(with movie: Movie) {
@@ -140,6 +143,10 @@ class MovieCell: UICollectionViewCell {
         imageView.image = UIImage(systemName: "movieclapper")
         updateImageViewAppearance(isPlaceholder: true)
         
+    }
+    
+    func toggleFavoriteButton() {
+        favoriteButton.isSelected.toggle()
     }
     
     func updateFavoriteState(isFavorite: Bool) {

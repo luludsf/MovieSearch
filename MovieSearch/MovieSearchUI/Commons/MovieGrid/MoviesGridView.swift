@@ -133,14 +133,18 @@ extension MoviesGridView: UICollectionViewDataSource {
         }
         
         let movie = movies[indexPath.item]
-        // TODO: verificar se junto as requisicoes na view controller com dispatchgroup
         cell.configure(with: movie)
         delegate?.getFavorite(movie: movie) { isFavorite in
             cell.updateFavoriteState(isFavorite: isFavorite)
         }
         
         cell.didTapFavoriteButton = { [weak self] isFavorite in
-            self?.delegate?.didTapFavoriteButton(isFavorite: isFavorite, selectedMovie: movie)
+            self?.delegate?.didTapFavoriteButton(isFavorite: isFavorite, selectedMovie: movie) { movieWasDeleted in
+                cell.enableUserInteraction()
+                if !movieWasDeleted {
+                    cell.toggleFavoriteButton()
+                }
+            }
         }
         
         if let imageURL = movie.posterPath {

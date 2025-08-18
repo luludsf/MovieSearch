@@ -9,6 +9,7 @@ import Foundation
 
 final class MovieDetailsViewModel: MovieDetailsViewModelProtocol {
     weak var delegate: MovieDetailsViewModelDelegate?
+    weak var updateDelegate: MovieSearchResultViewControllerUpdateDelegate?
     
     private let favoritesManager: FavoritesManagerProtocol
     private let movieDetailsUseCase: MovieDetailsUseCaseProtocol
@@ -48,14 +49,23 @@ final class MovieDetailsViewModel: MovieDetailsViewModelProtocol {
     }
     
     func fetchImageData(from url: String, shouldIgnoreCache: Bool, completion: @escaping (Data?) -> Void) {
-        movieImageDownloadUseCase.getMovieImage(from: url, with: imageType, shouldIgnoreCache: shouldIgnoreCache) { imageData in
-            completion(imageData)
+        movieImageDownloadUseCase.getMovieImage(from: url, with: imageType, shouldIgnoreCache: shouldIgnoreCache) { result in
+            switch result {
+            case .success(let imageData):
+                completion(imageData)
+            case .failure:
+                completion(nil)
+            }
         }
     }
     
-    func manageFavoriteMovie(isFavorite: Bool) {
+    func manageFavoriteMovie(isFavorite: Bool, completion: @escaping (Bool) -> Void) {
         guard let currentMovie else { return }
-        favoritesManager.manageFavoriteMovie(isFavorite: isFavorite, selectedMovie: currentMovie)
+        favoritesManager.manageFavoriteMovie(isFavorite: isFavorite, selectedMovie: currentMovie) { success in
+            if success {
+                self.updateDelegate?.reloadView()
+            }
+        }
     }
     
     func isFavoriteMovie(completion: @escaping (Bool) -> Void) {

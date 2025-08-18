@@ -14,8 +14,8 @@ protocol MovieSearchResultViewModelProtocol {
     
     func fetchNextPage()
     func fetchSearchMovies(query: String, page: Int?)
-    func openMovieDetails(with movieId: Int)
+    func openMovieDetails(with movieId: Int, updateDelegate: MovieSearchResultViewControllerUpdateDelegate)
     func fetchImageData(from url: String, shouldIgnoreCache: Bool, completion: @escaping (Data?) -> Void)
-    func manageFavoriteMovie(isFavorite: Bool, selectedMovie: Movie)
+    func manageFavoriteMovie(isFavorite: Bool, selectedMovie: Movie, completion: @escaping (Bool) -> Void)
     func isFavoriteMovie(movie: Movie, completion: @escaping (Bool) -> Void)
 }

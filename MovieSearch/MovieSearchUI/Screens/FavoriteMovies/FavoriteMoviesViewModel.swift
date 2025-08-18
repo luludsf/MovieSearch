@@ -20,8 +20,8 @@ class FavoriteMoviesViewModel: FavoriteMoviesViewModelProtocol {
         self.movieImageDownloadUseCase = movieImageDownloadUseCase
     }
     
-    func deleteFavoriteMovie(_ movie: Movie) {
-        favoritesManager.deleteFavoriteMovie(movie)
+    func deleteFavoriteMovie(_ movie: Movie, completion: @escaping (Bool) -> Void) {
+        favoritesManager.deleteFavoriteMovie(movie, completion: completion)
     }
     
     func fetchAllFavoriteMovies(completion: @escaping ([Movie]?) -> Void) {
@@ -33,8 +33,13 @@ class FavoriteMoviesViewModel: FavoriteMoviesViewModelProtocol {
     }
     
     func fetchImageData(from url: String, shouldIgnoreCache: Bool, completion: @escaping (Data?) -> Void) {
-        movieImageDownloadUseCase.getMovieImage(from: url, with: imageType, shouldIgnoreCache: shouldIgnoreCache) { imageData in
-            completion(imageData)
+        movieImageDownloadUseCase.getMovieImage(from: url, with: imageType, shouldIgnoreCache: shouldIgnoreCache) { result in
+            switch result {
+            case .success(let imageData):
+                completion(imageData)
+            case .failure:
+                completion(nil)
+            }
         }
     }
     

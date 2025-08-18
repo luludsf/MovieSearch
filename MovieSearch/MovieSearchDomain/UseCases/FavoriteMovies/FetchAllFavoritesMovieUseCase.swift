@@ -13,7 +13,6 @@ class FetchAllFavoritesMovieUseCase: FetchAllFavoritesMovieUseCaseProtocol {
         self.repository = repository
     }
     
-    // TODO: VERIFICAR ERROR
     func execute(completion: @escaping ([Movie]?) -> Void) {
         repository.fetchAllFavoriteMovies { movies in
             completion(movies)

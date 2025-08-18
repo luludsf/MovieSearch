@@ -6,11 +6,11 @@
 //
 
 protocol FavoritesManagerProtocol {
-    func saveFavoriteMovie(_ movie: Movie)
-    func deleteFavoriteMovie(_ movie: Movie)
+    func saveFavoriteMovie(_ movie: Movie, completion: @escaping (Bool) -> Void)
+    func deleteFavoriteMovie(_ movie: Movie, completion: @escaping (Bool) -> Void)
     func fetchAllFavoriteMovies(completion: @escaping ([Movie]?) -> Void)
     func fetchFavoriteMovie(movieId: Int, completion: @escaping (Bool) -> Void)
-    func manageFavoriteMovie(isFavorite: Bool, selectedMovie: Movie)
+    func manageFavoriteMovie(isFavorite: Bool, selectedMovie: Movie, completion: @escaping (Bool) -> Void)
 }
 
 class FavoritesManager: FavoritesManagerProtocol {
@@ -27,12 +27,12 @@ class FavoritesManager: FavoritesManagerProtocol {
         self.fetchAllFavoritesMovieUseCase = fetchAllFavoritesMovieUseCase
     }
     
-    func saveFavoriteMovie(_ movie: Movie) {
-        saveFavoriteMovieUseCase.execute(movie)
+    func saveFavoriteMovie(_ movie: Movie, completion: @escaping (Bool) -> Void) {
+        saveFavoriteMovieUseCase.execute(movie, completion: completion)
     }
     
-    func deleteFavoriteMovie(_ movie: Movie) {
-        deleteFavoriteMovieUseCase.execute(movie)
+    func deleteFavoriteMovie(_ movie: Movie, completion: @escaping (Bool) -> Void) {
+        deleteFavoriteMovieUseCase.execute(movie, completion: completion)
     }
     
     func fetchAllFavoriteMovies(completion: @escaping ([Movie]?) -> Void) {
@@ -45,14 +45,14 @@ class FavoritesManager: FavoritesManagerProtocol {
         fetchFavoriteMovieUseCase.execute(movieId, completion: completion)
     }
     
-    func manageFavoriteMovie(isFavorite: Bool, selectedMovie: Movie) {
+    func manageFavoriteMovie(isFavorite: Bool, selectedMovie: Movie, completion: @escaping (Bool) -> Void) {
         fetchFavoriteMovieUseCase.execute(selectedMovie.id) { isSaved in
             if !isSaved && isFavorite {
-                self.saveFavoriteMovieUseCase.execute(selectedMovie)
+                self.saveFavoriteMovieUseCase.execute(selectedMovie, completion: completion)
             }
             
             if isSaved && !isFavorite {
-                self.deleteFavoriteMovieUseCase.execute(selectedMovie)
+                self.deleteFavoriteMovieUseCase.execute(selectedMovie, completion: completion)
             }
         }
     }

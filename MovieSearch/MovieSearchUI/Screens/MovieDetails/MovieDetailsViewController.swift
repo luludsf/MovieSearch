@@ -7,6 +7,8 @@
 
 import UIKit
 
+// TODO: ADICIONAR ESTADOS DE LOADING, SUCESSO OU ERRO
+
 final class MovieDetailsViewController: UIViewController {
     
     private let contentView: MovieDetailViewProtocol
@@ -52,12 +54,14 @@ extension MovieDetailsViewController: MovieDetailsViewModelDelegate {
     }
     
     func didFailWithError(_ error: String) {
-        // TODO:
+        DispatchQueue.main.async {
+            self.contentView.showError(message: error)
+        }
     }
 }
 
 extension MovieDetailsViewController: MovieDetailViewDelegate {
-    func didTapFavoriteButton(isFavorite: Bool) {
-        viewModel.manageFavoriteMovie(isFavorite: isFavorite)
+    func didTapFavoriteButton(isFavorite: Bool, completion: @escaping (Bool) -> Void) {
+        viewModel.manageFavoriteMovie(isFavorite: isFavorite, completion: completion)
     }
 }

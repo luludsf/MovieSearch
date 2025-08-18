@@ -15,9 +15,13 @@ class MovieImageDownloadUseCase: MovieImageDownloadUseCaseProtocol {
         self.repository = repository
     }
     
-    func getMovieImage(from url: String, with imageType: ImageType, shouldIgnoreCache: Bool, completion: @escaping (Data?) -> Void) {
-        repository.getMovieImage(from: url, with: imageType, shouldIgnoreCache: shouldIgnoreCache) { imageData in
-            completion(imageData)
-        }
+    func getMovieImage(from url: String, with imageType: ImageType, shouldIgnoreCache: Bool, completion: @escaping (Result<Data?, MovieSearchError>) -> Void) {
+        
+        repository.getMovieImage(
+            from: url,
+            with: imageType,
+            shouldIgnoreCache: shouldIgnoreCache,
+            completion: completion
+        )
     }
 }
