@@ -7,10 +7,10 @@
 
 final class FavoriteMoviesRepository: FavoriteMoviesRepositoryProtocol {
 
-    private let service: FavoriteMovieServiceProtocol
+    private let dataSource: FavoriteMovieDataSourceProtocol
     
-    init(service: FavoriteMovieServiceProtocol) {
-        self.service = service
+    init(dataSource: FavoriteMovieDataSourceProtocol) {
+        self.dataSource = dataSource
     }
     
     func saveFavoriteMovie(_ movie: Movie, completion: @escaping (Bool) -> Void) {
@@ -26,7 +26,7 @@ final class FavoriteMoviesRepository: FavoriteMoviesRepositoryProtocol {
             budget: movie.budget,
             revenue: movie.revenue
         )
-        service.saveFavoriteMovie(movieObject, completion: completion)
+        dataSource.saveFavoriteMovie(movieObject, completion: completion)
     }
     
     func deleteFavoriteMovie(_ movie: Movie, completion: @escaping (Bool) -> Void) {
@@ -42,11 +42,11 @@ final class FavoriteMoviesRepository: FavoriteMoviesRepositoryProtocol {
             budget: movie.budget,
             revenue: movie.revenue
         )
-        service.deleteFavoriteMovie(movieObject, completion: completion)
+        dataSource.deleteFavoriteMovie(movieObject, completion: completion)
     }
     
     func fetchAllFavoriteMovies(completion: @escaping ([Movie]?) -> Void) {
-        service.fetchAllFavoriteMovies { moviesObject in
+        dataSource.fetchAllFavoriteMovies { moviesObject in
             let movies = moviesObject?.map {
                 Movie(
                     id: $0.id,
@@ -66,6 +66,6 @@ final class FavoriteMoviesRepository: FavoriteMoviesRepositoryProtocol {
     }
     
     func fetchFavoriteMovie(id: Int, completion: @escaping (Bool) -> Void) {
-        service.fetchFavoriteMovie(id: id, completion: completion)
+        dataSource.fetchFavoriteMovie(id: id, completion: completion)
     }
 }

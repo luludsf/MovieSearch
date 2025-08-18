@@ -1,5 +1,5 @@
 //
-//  MockFavoriteMovieService.swift
+//  MockFavoriteMovieSwiftDataDataSource.swift
 //  MovieSearch
 //
 //  Created by Luana Duarte on 17/08/25.
@@ -8,7 +8,7 @@
 import XCTest
 @testable import MovieSearch
 
-class MockFavoriteMovieService: FavoriteMovieServiceProtocol {
+class MockFavoriteMovieSwiftDataDataSource: FavoriteMovieDataSourceProtocol {
     var shouldSucceed = true
     var savedMovies: [MovieObject] = []
     var deletedMovies: [MovieObject] = []

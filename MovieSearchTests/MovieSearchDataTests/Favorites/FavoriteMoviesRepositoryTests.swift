@@ -1,5 +1,5 @@
 //
-//  FavoriteMovieServiceTests.swift
+//  FavoriteMoviesRepositoryTests.swift
 //  MovieSearch
 //
 //  Created by Luana Duarte on 17/08/25.
@@ -7,36 +7,30 @@
 
 import XCTest
 @testable import MovieSearch
-import SwiftData
 
-final class FavoriteMovieServiceTests: XCTestCase {
+final class FavoriteMoviesRepositoryTests: XCTestCase {
     
-    var sut: FavoriteMovieService!
-    var modelContainer: ModelContainer!
+    var sut: FavoriteMoviesRepository!
+    var mockDataSource: MockFavoriteMovieSwiftDataDataSource!
     
     override func setUp() {
         super.setUp()
-        do {
-            let config = ModelConfiguration(isStoredInMemoryOnly: true)
-            modelContainer = try ModelContainer(for: MovieObject.self, configurations: config)
-            sut = FavoriteMovieService(modelContainer: modelContainer)
-        } catch {
-            XCTFail("Criação do ModelContainer falhou: \(error)")
-        }
+        mockDataSource = MockFavoriteMovieSwiftDataDataSource()
+        sut = FavoriteMoviesRepository(dataSource: mockDataSource)
     }
     
     override func tearDown() {
         sut = nil
-        modelContainer = nil
+        mockDataSource = nil
         super.tearDown()
     }
     
     // MARK: - saveFavoriteMovie Tests
     
-    func test_saveFavoriteMovie_WhenSuccessful_ShouldSaveToDatabase() {
+    func test_saveFavoriteMovie_WhenSuccessful_ShouldCallServiceAndReturnTrue() {
         // Given
-        let expectation = XCTestExpectation(description: "Filme salvo com sucesso")
-        let movie = MovieObject(
+        let expectation = XCTestExpectation(description: "Favorito salvo")
+        let movie = Movie(
             id: 198884,
             originalTitle: "Barbie and The Sensations: Rockin' Back to Earth",
             posterPath: "/vUCqvymxUwYxp9H6jw5R5UiaeE5.jpg",
@@ -48,32 +42,25 @@ final class FavoriteMovieServiceTests: XCTestCase {
             budget: 1000000,
             revenue: 5000000
         )
+        mockDataSource.shouldSucceed = true
         
         // When
         sut.saveFavoriteMovie(movie) { success in
             // Then
             XCTAssertTrue(success)
-            
-            // Verify movie was saved
-            let descriptor = FetchDescriptor<MovieObject>()
-            DispatchQueue.main.async {
-                let savedMovies = try? self.modelContainer.mainContext.fetch(descriptor)
-                XCTAssertEqual(savedMovies?.count, 1)
-                XCTAssertEqual(savedMovies?.first?.id, 198884)
-                XCTAssertEqual(savedMovies?.first?.title, "Barbie and the Sensations: Rockin' Back to Earth")
-                
-                expectation.fulfill()
-            }
+            XCTAssertEqual(self.mockDataSource.savedMovies.count, 1)
+            XCTAssertEqual(self.mockDataSource.savedMovies.first?.id, 198884)
+            XCTAssertEqual(self.mockDataSource.savedMovies.first?.title, "Barbie and the Sensations: Rockin' Back to Earth")
+            expectation.fulfill()
         }
         
         wait(for: [expectation], timeout: 1.0)
     }
     
-    func test_saveFavoriteMovie_WhenModelContainerIsNil_ShouldReturnFalse() {
+    func test_saveFavoriteMovie_WhenServiceFails_ShouldReturnFalse() {
         // Given
         let expectation = XCTestExpectation(description: "Filme não salvo")
-        let service = FavoriteMovieService(modelContainer: nil)
-        let movie = MovieObject(
+        let movie = Movie(
             id: 198884,
             originalTitle: "Barbie and The Sensations: Rockin' Back to Earth",
             posterPath: "/vUCqvymxUwYxp9H6jw5R5UiaeE5.jpg",
@@ -85,9 +72,10 @@ final class FavoriteMovieServiceTests: XCTestCase {
             budget: 1000000,
             revenue: 5000000
         )
+        mockDataSource.shouldSucceed = false
         
         // When
-        service.saveFavoriteMovie(movie) { success in
+        sut.saveFavoriteMovie(movie) { success in
             // Then
             XCTAssertFalse(success)
             expectation.fulfill()
@@ -98,10 +86,10 @@ final class FavoriteMovieServiceTests: XCTestCase {
     
     // MARK: - deleteFavoriteMovie Tests
     
-    func test_deleteFavoriteMovie_WhenSuccessful_ShouldDeleteFromDatabase() {
+    func test_deleteFavoriteMovie_WhenSuccessful_ShouldCallServiceAndReturnTrue() {
         // Given
-        let expectation = XCTestExpectation(description: "Filme deletado com sucesso")
-        let movie = MovieObject(
+        let expectation = XCTestExpectation(description: "Filme deletado")
+        let movie = Movie(
             id: 198884,
             originalTitle: "Barbie and The Sensations: Rockin' Back to Earth",
             posterPath: "/vUCqvymxUwYxp9H6jw5R5UiaeE5.jpg",
@@ -113,39 +101,24 @@ final class FavoriteMovieServiceTests: XCTestCase {
             budget: 1000000,
             revenue: 5000000
         )
+        mockDataSource.shouldSucceed = true
         
-        DispatchQueue.main.async {
-            // When
-            self.modelContainer.mainContext.insert(movie)
-            try? self.modelContainer.mainContext.save()
-            
-            var descriptor = FetchDescriptor<MovieObject>()
-            var savedMovies = try? self.modelContainer.mainContext.fetch(descriptor)
-            
+        // When
+        sut.deleteFavoriteMovie(movie) { success in
             // Then
-            XCTAssertEqual(savedMovies?.count, 1)
-            
-            
-            self.sut.deleteFavoriteMovie(movie) { success in
-                // Then
-                XCTAssertTrue(success)
-                
-                descriptor = FetchDescriptor<MovieObject>()
-                savedMovies = try? self.modelContainer.mainContext.fetch(descriptor)
-                XCTAssertEqual(savedMovies?.count, 0)
-                
-                expectation.fulfill()
-            }
+            XCTAssertTrue(success)
+            XCTAssertEqual(self.mockDataSource.deletedMovies.count, 1)
+            XCTAssertEqual(self.mockDataSource.deletedMovies.first?.id, 198884)
+            expectation.fulfill()
         }
+        
         wait(for: [expectation], timeout: 1.0)
     }
     
-    // MARK: - fetchFavoriteMovie Tests
-    
-    func test_fetchFavoriteMovie_WhenMovieExists_ShouldReturnTrue() {
+    func test_deleteFavoriteMovie_WhenServiceFails_ShouldReturnFalse() {
         // Given
-        let expectation = XCTestExpectation(description: "Favorito encontrado")
-        let movie = MovieObject(
+        let expectation = XCTestExpectation(description: "Filme nõa deletado")
+        let movie = Movie(
             id: 198884,
             originalTitle: "Barbie and The Sensations: Rockin' Back to Earth",
             posterPath: "/vUCqvymxUwYxp9H6jw5R5UiaeE5.jpg",
@@ -157,31 +130,12 @@ final class FavoriteMovieServiceTests: XCTestCase {
             budget: 1000000,
             revenue: 5000000
         )
+        mockDataSource.shouldSucceed = false
         
         // When
-        
-        DispatchQueue.main.async {
-            self.modelContainer.mainContext.insert(movie)
-            try? self.modelContainer.mainContext.save()
-            
-            self.sut.fetchFavoriteMovie(id: 198884) { isFavorite in
-                // Then
-                XCTAssertTrue(isFavorite)
-                expectation.fulfill()
-            }
-        }
-        
-        wait(for: [expectation], timeout: 1.0)
-    }
-    
-    func test_fetchFavoriteMovie_WhenMovieDoesNotExist_ShouldReturnFalse() {
-        // Given
-        let expectation = XCTestExpectation(description: "Favorito não existe")
-        
-        // When
-        sut.fetchFavoriteMovie(id: 999) { isFavorite in
+        sut.deleteFavoriteMovie(movie) { success in
             // Then
-            XCTAssertFalse(isFavorite)
+            XCTAssertFalse(success)
             expectation.fulfill()
         }
         
@@ -190,10 +144,10 @@ final class FavoriteMovieServiceTests: XCTestCase {
     
     // MARK: - fetchAllFavoriteMovies Tests
     
-    func test_fetchAllFavoriteMovies_WhenSuccessful_ShouldReturnAllMovies() {
+    func test_fetchAllFavoriteMovies_WhenSuccessful_ShouldReturnMovies() {
         // Given
-        let expectation = XCTestExpectation(description: "Favoritos encontrados")
-        let movies = [
+        let expectation = XCTestExpectation(description: "Filmes encontrados")
+        let mockMovieObjects = [
             MovieObject(
                 id: 198884,
                 originalTitle: "Barbie and The Sensations: Rockin' Back to Earth",
@@ -219,36 +173,65 @@ final class FavoriteMovieServiceTests: XCTestCase {
                 revenue: 1000000
             )
         ]
+        mockDataSource.favoriteMovies = mockMovieObjects
+        mockDataSource.shouldSucceed = true
         
-        DispatchQueue.main.async {
-            
-            // When
-            for movie in movies {
-                self.modelContainer.mainContext.insert(movie)
-            }
-            try? self.modelContainer.mainContext.save()
-            
-            self.sut.fetchAllFavoriteMovies { fetchedMovies in
-                // Then
-                XCTAssertNotNil(fetchedMovies)
-                XCTAssertEqual(fetchedMovies?.count, 2)
-                XCTAssertEqual(fetchedMovies?.first?.originalTitle, "Barbie and The Sensations: Rockin' Back to Earth")
-                XCTAssertEqual(fetchedMovies?.last?.originalTitle, "Max Steel: Turbo Charged")
-                expectation.fulfill()
-            }
+        // When
+        sut.fetchAllFavoriteMovies { movies in
+            // Then
+            XCTAssertNotNil(movies)
+            XCTAssertEqual(movies?.count, 2)
+            XCTAssertEqual(movies?.first?.id, 198884)
+            XCTAssertEqual(movies?.first?.title, "Barbie and the Sensations: Rockin' Back to Earth")
+            XCTAssertEqual(movies?.last?.id, 973042)
+            XCTAssertEqual(movies?.last?.title, "Max Steel: Turbo Charged")
+            expectation.fulfill()
         }
+        
         wait(for: [expectation], timeout: 1.0)
     }
     
-    func test_fetchAllFavoriteMovies_WhenNoMovies_ShouldReturnEmptyArray() {
+    func test_fetchAllFavoriteMovies_WhenServiceFails_ShouldReturnNil() {
         // Given
-        let expectation = XCTestExpectation(description: "Nenhum favorito encontrado")
+        let expectation = XCTestExpectation(description: "Filmes favoritos não encontrados")
+        mockDataSource.shouldSucceed = false
         
         // When
-        sut.fetchAllFavoriteMovies { fetchedMovies in
+        sut.fetchAllFavoriteMovies { movies in
             // Then
-            XCTAssertNotNil(fetchedMovies)
-            XCTAssertEqual(fetchedMovies?.count, 0)
+            XCTAssertNil(movies)
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1.0)
+    }
+    
+    // MARK: - fetchFavoriteMovie Tests
+    
+    func test_fetchFavoriteMovie_WhenSuccessful_ShouldReturnTrue() {
+        // Given
+        let expectation = XCTestExpectation(description: "Filme favorito encontrado")
+        mockDataSource.shouldSucceed = true
+        
+        // When
+        sut.fetchFavoriteMovie(id: 198884) { isFavorite in
+            // Then
+            XCTAssertTrue(isFavorite)
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1.0)
+    }
+    
+    func test_fetchFavoriteMovie_WhenServiceFails_ShouldReturnFalse() {
+        // Given
+        let expectation = XCTestExpectation(description: "Filme favorito não encontrado")
+        mockDataSource.shouldSucceed = false
+        
+        // When
+        sut.fetchFavoriteMovie(id: 198884) { isFavorite in
+            // Then
+            XCTAssertFalse(isFavorite)
             expectation.fulfill()
         }
         

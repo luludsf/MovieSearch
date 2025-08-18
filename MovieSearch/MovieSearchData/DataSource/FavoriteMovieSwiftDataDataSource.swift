@@ -9,11 +9,11 @@ import SwiftData
 import Foundation
 import OSLog
 
-class FavoriteMovieService: FavoriteMovieServiceProtocol {
+class FavoriteMovieSwiftDataDataSource: FavoriteMovieDataSourceProtocol {
     
     private static let logger = Logger(
         subsystem: "luanaduarte.MovieSearch",
-        category: "FavoriteMovieService"
+        category: "FavoriteMovieDataSource"
     )
     
     private let modelContainer: ModelContainer?

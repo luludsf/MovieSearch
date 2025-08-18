@@ -21,7 +21,7 @@ class MovieSearchRepositoryFactory: MovieSearchRepositoryFactoryProtocol {
     
     func makeFavoriteMoviesRepository() -> FavoriteMoviesRepositoryProtocol {
         let modelContainer: ModelContainer? = try? ModelContainer(for: MovieObject.self)
-        let service = FavoriteMovieService(modelContainer: modelContainer)
-        return FavoriteMoviesRepository(service: service)
+        let dataSource = FavoriteMovieSwiftDataDataSource(modelContainer: modelContainer)
+        return FavoriteMoviesRepository(dataSource: dataSource)
     }
 }
