@@ -128,7 +128,7 @@ extension MoviesGridView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCell.reuseIdentifier, for: indexPath) as? MovieCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UIStrings.Identifiers.movieCell, for: indexPath) as? MovieCell else {
             fatalError("Não foi possível efetuar o dequeueReusableCell com o MovieCell.reuseIdentifier")
         }
         

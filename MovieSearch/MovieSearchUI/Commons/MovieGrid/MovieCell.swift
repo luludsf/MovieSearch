@@ -9,7 +9,7 @@ import UIKit
 
 class MovieCell: UICollectionViewCell {
     
-    static let reuseIdentifier = "MovieCell"
+    static let reuseIdentifier = UIStrings.Identifiers.movieCell
     
     var didTapFavoriteButton: ((Bool) -> Void)?
     
@@ -63,8 +63,8 @@ class MovieCell: UICollectionViewCell {
     
     let favoriteButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setImage(UIImage(systemName: "heart"), for: .normal)
-        button.setImage(UIImage(systemName: "suit.heart.fill"), for: .selected)
+        button.setImage(UIImage(systemName: UIStrings.Icons.heart), for: .normal)
+        button.setImage(UIImage(systemName: UIStrings.Icons.heartFilled), for: .selected)
         button.imageView?.contentMode = .scaleAspectFill
         button.clipsToBounds = true
         button.contentHorizontalAlignment = .fill
@@ -85,7 +85,7 @@ class MovieCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        imageView.image = UIImage(systemName: "movieclapper")
+        imageView.image = UIImage(systemName: UIStrings.Icons.movieClapper)
         updateImageViewAppearance(isPlaceholder: true)
         titleLabel.text = nil
         ratingLabel.text = nil
@@ -140,7 +140,7 @@ class MovieCell: UICollectionViewCell {
     func configure(with movie: Movie) {
         titleLabel.text = movie.originalTitle
         ratingLabel.text = "\(String(format: "%.1f", movie.voteAverage))"
-        imageView.image = UIImage(systemName: "movieclapper")
+        imageView.image = UIImage(systemName: UIStrings.Icons.movieClapper)
         updateImageViewAppearance(isPlaceholder: true)
         
     }

@@ -8,9 +8,10 @@
 import Foundation
 
 final class MovieDetailsViewModel: MovieDetailsViewModelProtocol {
+    
     weak var delegate: MovieDetailsViewModelDelegate?
     weak var updateDelegate: MovieSearchResultViewControllerUpdateDelegate?
-    var title: String = "Detalhes"
+    var title: String = UIStrings.Navigation.details
     
     private let favoritesManager: FavoritesManagerProtocol
     private let movieDetailsUseCase: MovieDetailsUseCaseProtocol
@@ -39,8 +40,8 @@ final class MovieDetailsViewModel: MovieDetailsViewModelProtocol {
                 self.currentMovie = movieDetails
                 self.delegate?.didFetch(movieDetails)
                 if let backdropPath = movieDetails.backdropPath {
-                    self.fetchImageData(from: backdropPath) { [weak self] imageData in
-                        self?.delegate?.didFetch(imageData)
+                    self.fetchImageData(from: backdropPath) { imageData in
+                        self.delegate?.didFetch(imageData)
                     }
                 }
             case .failure(let error):
@@ -62,9 +63,9 @@ final class MovieDetailsViewModel: MovieDetailsViewModelProtocol {
     
     func manageFavoriteMovie(isFavorite: Bool, completion: @escaping (Bool) -> Void) {
         guard let currentMovie else { return }
-        favoritesManager.manageFavoriteMovie(isFavorite: isFavorite, selectedMovie: currentMovie) { success in
+        favoritesManager.manageFavoriteMovie(isFavorite: isFavorite, selectedMovie: currentMovie) {[weak self] success in
             if success {
-                self.updateDelegate?.reloadView()
+                self?.updateDelegate?.reloadView()
             }
         }
     }

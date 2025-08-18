@@ -46,7 +46,7 @@ class MovieDetailView: UIView, MovieDetailViewProtocol {
     let backdropImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .center
-        imageView.image = UIImage(systemName: "movieclapper")
+        imageView.image = UIImage(systemName: UIStrings.Icons.movieClapper)
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -62,8 +62,8 @@ class MovieDetailView: UIView, MovieDetailViewProtocol {
 
     let favoriteButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setImage(UIImage(systemName: "heart"), for: .normal)
-        button.setImage(UIImage(systemName: "suit.heart.fill"), for: .selected)
+        button.setImage(UIImage(systemName: UIStrings.Icons.heart), for: .normal)
+        button.setImage(UIImage(systemName: UIStrings.Icons.heartFilled), for: .selected)
         button.imageView?.contentMode = .scaleAspectFill
         button.clipsToBounds = true
         button.contentHorizontalAlignment = .fill
@@ -202,12 +202,12 @@ class MovieDetailView: UIView, MovieDetailViewProtocol {
 
     private func configure(with movie: Movie, isFavorite: Bool) {
         titleLabel.text = movie.title
-        originalTitleLabel.text = "Original: \(movie.originalTitle ?? "N/A")"
-        ratingLabel.text = "★ \(String(format: "%.1f", movie.voteAverage))"
+        originalTitleLabel.text = String(format: UIStrings.Movie.original, movie.originalTitle ?? UIStrings.Common.na)
+        ratingLabel.text = String(format: UIStrings.Movie.rating, movie.voteAverage)
         overviewLabel.text = movie.overview
-        releaseDateLabel.text = "Lançamento: \(movie.releaseDate ?? "N/A")"
-        budgetLabel.text = "Custo: \(formatAsCurrency(String(movie.budget ?? 0)))"
-        revenueLabel.text = "Arrecadação: \(formatAsCurrency(String(movie.revenue ?? 0)))"
+        releaseDateLabel.text = String(format: UIStrings.Movie.release, movie.releaseDate ?? UIStrings.Common.na)
+        budgetLabel.text = String(format: UIStrings.Movie.budget, formatAsCurrency(String(movie.budget ?? 0)))
+        revenueLabel.text = String(format: UIStrings.Movie.revenue, formatAsCurrency(String(movie.revenue ?? 0)))
         favoriteButton.isSelected = isFavorite
     }
     
@@ -219,13 +219,13 @@ class MovieDetailView: UIView, MovieDetailViewProtocol {
     }
     
     private func formatAsCurrency(_ string: String?) -> String {
-        guard let string = string, let value = Int(string) else { return "N/A" }
+        guard let string = string, let value = Int(string) else { return UIStrings.Common.na }
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.currencyCode = "USD"
-        formatter.currencySymbol = "$"
+        formatter.currencyCode = UIStrings.Common.usd
+        formatter.currencySymbol = UIStrings.Common.dollarSymbol
         formatter.maximumFractionDigits = 0
-        return formatter.string(from: NSNumber(value: value)) ?? "N/A"
+        return formatter.string(from: NSNumber(value: value)) ?? UIStrings.Common.na
     }
 }
 

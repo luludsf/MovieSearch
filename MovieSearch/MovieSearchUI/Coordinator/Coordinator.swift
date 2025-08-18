@@ -26,11 +26,11 @@ class Coordinator: CoordinatorProtocol {
         let favoriteMoviesViewController = factory.makeFavoriteMoviesViewController(delegate: self)
         let secondNavController = UINavigationController(rootViewController: favoriteMoviesViewController)
 
-        firstNavController.tabBarItem = UITabBarItem(title: "Busca", image: UIImage(systemName: "magnifyingglass.circle"), tag: 0)
+        firstNavController.tabBarItem = UITabBarItem(title: UIStrings.Navigation.search, image: UIImage(systemName: UIStrings.Icons.magnifyingGlass), tag: 0)
         secondNavController.tabBarItem = UITabBarItem(
-            title: "Favoritos",
-            image: UIImage(systemName: "star.circle"),
-            selectedImage: UIImage(systemName: "star.circle")
+            title: UIStrings.Navigation.favorites,
+            image: UIImage(systemName: UIStrings.Icons.star),
+            selectedImage: UIImage(systemName: UIStrings.Icons.star)
         )
         
         let tabBarController = UITabBarController()

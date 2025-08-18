@@ -22,7 +22,7 @@ class MovieSearchView: UIView, MovieSearchViewProtocol {
     
     private lazy var searchTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Digite o nome do filme que está buscando..."
+        textField.placeholder = UIStrings.Search.placeholder
         textField.borderStyle = .roundedRect
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
@@ -30,7 +30,7 @@ class MovieSearchView: UIView, MovieSearchViewProtocol {
     
     private lazy var searchButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Buscar", for: .normal)
+        button.setTitle(UIStrings.Search.button, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isEnabled = false
