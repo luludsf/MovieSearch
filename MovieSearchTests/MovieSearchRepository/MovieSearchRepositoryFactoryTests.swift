@@ -14,7 +14,8 @@ final class MovieSearchRepositoryFactoryTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        sut = MovieSearchRepositoryFactory()
+        let networking = MockNetworking()
+        sut = MovieSearchRepositoryFactory(networking: networking)
     }
     
     override func tearDown() {
