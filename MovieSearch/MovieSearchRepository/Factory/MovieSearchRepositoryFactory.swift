@@ -8,9 +8,14 @@
 import SwiftData
 
 class MovieSearchRepositoryFactory: MovieSearchRepositoryFactoryProtocol {
+    
+    private let networking: Networking
+    
+    init(networking: Networking) {
+        self.networking = networking
+    }
 
     func makeMovieSearchRepository() -> MovieSearchRepositoryProtocol {
-        let networking = URLSessionClient()
         return MovieSearchRepository(networking: networking)
     }
     

@@ -20,7 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let navigationController = UINavigationController()
         
-        let repositoryFactory = MovieSearchRepositoryFactory()
+        let networking = URLSessionClient()
+        let repositoryFactory = MovieSearchRepositoryFactory(networking: networking)
         let domainFactory = MovieSearchDomainFactory(movieSearchRepositoryFactory: repositoryFactory)
         let uiFactory = MovieSearchUIFactory(movieSearchDomainFactory: domainFactory)
         

@@ -25,7 +25,7 @@ class Coordinator: CoordinatorProtocol {
 
         let favoriteMoviesViewController = factory.makeFavoriteMoviesViewController(delegate: self)
         let secondNavController = UINavigationController(rootViewController: favoriteMoviesViewController)
-        
+
         firstNavController.tabBarItem = UITabBarItem(title: "Busca", image: UIImage(systemName: "magnifyingglass.circle"), tag: 0)
         secondNavController.tabBarItem = UITabBarItem(
             title: "Favoritos",
