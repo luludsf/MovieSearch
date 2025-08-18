@@ -17,7 +17,7 @@ class FavoriteMoviesViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.contentView.delegate = self
-        self.contentView.messageLabelText = "Não há filmes favoritos salvos"
+        self.contentView.messageLabelText = viewModel.emptyState
     }
     
     required init?(coder: NSCoder) {
@@ -36,8 +36,7 @@ class FavoriteMoviesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Favoritos"
-        navigationController?.navigationBar.prefersLargeTitles = true
+        title = viewModel.title
     }
     
     private func fetchFavoriteMovies() {
@@ -45,7 +44,7 @@ class FavoriteMoviesViewController: UIViewController {
         viewModel.fetchAllFavoriteMovies { movies in
             guard let movies else {
                 self.contentView.updateState(.loading(false))
-                self.contentView.updateState(.error("Erro ao trazer favoritos"))
+                self.contentView.updateState(.error(self.viewModel.errorMessage))
                 return
             }
             self.contentView.updateState(.loading(false))

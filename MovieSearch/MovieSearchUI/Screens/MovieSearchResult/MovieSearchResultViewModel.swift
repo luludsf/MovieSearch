@@ -12,6 +12,7 @@ final class MovieSearchResultViewModel: MovieSearchResultViewModelProtocol {
     var query: String
     weak var coordinatorDelegate: CoordinatorDelegate?
     weak var delegate: MovieSearchResultViewModelDelegate?
+    var emptyState: String  = "Nenhum filme foi encontrado pela sua pesquisa"
     
     private let favoritesManager: FavoritesManagerProtocol
     private let movieSearchUseCase: MovieSearchUseCaseProtocol

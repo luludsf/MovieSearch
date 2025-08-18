@@ -10,6 +10,7 @@ import Foundation
 final class MovieDetailsViewModel: MovieDetailsViewModelProtocol {
     weak var delegate: MovieDetailsViewModelDelegate?
     weak var updateDelegate: MovieSearchResultViewControllerUpdateDelegate?
+    var title: String = "Detalhes"
     
     private let favoritesManager: FavoritesManagerProtocol
     private let movieDetailsUseCase: MovieDetailsUseCaseProtocol

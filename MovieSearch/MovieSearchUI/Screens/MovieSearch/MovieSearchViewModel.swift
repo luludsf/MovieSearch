@@ -6,7 +6,9 @@
 //
 
 final class MovieSearchViewModel: MovieSearchViewModelProtocol {
+    
     weak var coordinatorDelegate: CoordinatorDelegate?
+    var title: String = "Busca"
     
     func openMovieResults(for query: String) {
         coordinatorDelegate?.showMovieSearchResultsViewController(with: query)

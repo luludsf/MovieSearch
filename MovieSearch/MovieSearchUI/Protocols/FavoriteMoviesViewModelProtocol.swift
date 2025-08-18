@@ -9,6 +9,9 @@ import Foundation
 
 protocol FavoriteMoviesViewModelProtocol {
     var coordinatorDelegate: CoordinatorDelegate? { get set }
+    var title: String { get }
+    var emptyState: String { get }
+    var errorMessage: String { get }
     
     func openMovieDetails(with movieId: Int)
     func fetchImageData(from url: String, completion: @escaping (Data?) -> Void)

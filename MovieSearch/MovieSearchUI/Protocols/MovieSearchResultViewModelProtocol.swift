@@ -11,6 +11,7 @@ protocol MovieSearchResultViewModelProtocol {
     var query: String { get }
     var delegate: MovieSearchResultViewModelDelegate? { get set }
     var coordinatorDelegate: CoordinatorDelegate? { get set }
+    var emptyState: String { get }
     
     func fetchNextPage()
     func fetchSearchMovies(query: String, page: Int?)

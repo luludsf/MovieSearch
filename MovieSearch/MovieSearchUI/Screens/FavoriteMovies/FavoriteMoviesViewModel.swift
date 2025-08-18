@@ -10,10 +10,14 @@ import Foundation
 class FavoriteMoviesViewModel: FavoriteMoviesViewModelProtocol {
 
     weak var coordinatorDelegate: CoordinatorDelegate?
+    var errorMessage: String = "Erro ao trazer favoritos"
+    var emptyState: String  = "Não há filmes favoritos salvos"
+    var title: String = "Favorites"
+    
     private let favoritesManager: FavoritesManagerProtocol
     private let movieImageDownloadUseCase: MovieImageDownloadUseCaseProtocol
     private let imageType: ImageType = .poster
-    
+   
     init(favoritesManager: FavoritesManagerProtocol,
         movieImageDownloadUseCase: MovieImageDownloadUseCaseProtocol) {
         self.favoritesManager = favoritesManager

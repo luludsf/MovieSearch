@@ -30,8 +30,7 @@ class MovieSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "Busca"
-        navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.title = viewModel.title
     }
 }
 

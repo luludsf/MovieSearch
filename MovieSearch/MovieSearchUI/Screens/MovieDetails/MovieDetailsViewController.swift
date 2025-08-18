@@ -31,7 +31,7 @@ final class MovieDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Detalhes"
+        title = viewModel.title
         self.contentView.updateState(.loading)
         viewModel.fetchMovieDetails()
     }

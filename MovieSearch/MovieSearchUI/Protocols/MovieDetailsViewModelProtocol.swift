@@ -10,6 +10,7 @@ import Foundation
 protocol MovieDetailsViewModelProtocol {
     var delegate: MovieDetailsViewModelDelegate? { get set }
     var updateDelegate: MovieSearchResultViewControllerUpdateDelegate? { get set }
+    var title: String { get }
     
     func fetchMovieDetails()
     func fetchImageData(from url: String, completion: @escaping (Data?) -> Void)

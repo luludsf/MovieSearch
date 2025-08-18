@@ -7,5 +7,6 @@
 
 protocol MovieSearchViewModelProtocol {
     var coordinatorDelegate: CoordinatorDelegate? { get set }
+    var title: String { get }
     func openMovieResults(for query: String)
 }
