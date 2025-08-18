@@ -7,8 +7,6 @@
 
 import UIKit
 
-// TODO: ADICIONAR ESTADOS DE LOADING, SUCESSO OU ERRO
-
 final class MovieDetailsViewController: UIViewController {
     
     private let contentView: MovieDetailViewProtocol
@@ -34,6 +32,7 @@ final class MovieDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Detalhes"
+        self.contentView.updateState(.loading)
         viewModel.fetchMovieDetails()
     }
 }
@@ -48,14 +47,14 @@ extension MovieDetailsViewController: MovieDetailsViewModelDelegate {
     func didFetch(_ movie: Movie) {
         DispatchQueue.main.async {
             self.viewModel.isFavoriteMovie { isFavorite in
-                self.contentView.configure(with: movie, isFavorite: isFavorite)
+                self.contentView.updateState(.success(movie, isFavorite))
             }
         }
     }
     
     func didFailWithError(_ error: String) {
         DispatchQueue.main.async {
-            self.contentView.showError(message: error)
+            self.contentView.updateState(.error(error))
         }
     }
 }

@@ -8,9 +8,15 @@
 import UIKit
 
 class MovieDetailView: UIView, MovieDetailViewProtocol {
+    
+    enum MovieDetailViewState {
+        case loading
+        case success(Movie, Bool)
+        case error(String)
+    }
 
     weak var delegate: MovieDetailViewDelegate?
-        
+            
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -66,7 +72,14 @@ class MovieDetailView: UIView, MovieDetailViewProtocol {
         return button
     }()
     
-    private let errorView: UIView = {
+    private lazy var loadingView: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+    
+    private lazy var errorView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -81,20 +94,19 @@ class MovieDetailView: UIView, MovieDetailViewProtocol {
         label.font = .preferredFont(forTextStyle: .extraLargeTitle)
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
-        label.isHidden = true
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
-        setupErrorLayout()
+        setupStateViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-        
+            
     private func setupLayout() {
         backgroundColor = .systemBackground
         
@@ -137,11 +149,15 @@ class MovieDetailView: UIView, MovieDetailViewProtocol {
         favoriteButton.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
     }
     
-    private func setupErrorLayout() {
+    private func setupStateViews() {
+        addSubview(loadingView)
         addSubview(errorView)
         errorView.addSubview(errorMessageLabel)
         
         NSLayoutConstraint.activate([
+            loadingView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            
             errorView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             errorView.leadingAnchor.constraint(equalTo: leadingAnchor),
             errorView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -163,7 +179,28 @@ class MovieDetailView: UIView, MovieDetailViewProtocol {
         }
     }
         
-    func configure(with movie: Movie, isFavorite: Bool) {
+    func updateState(_ state: MovieDetailViewState) {
+        DispatchQueue.main.async {
+            self.scrollView.isHidden = true
+            self.backdropImageView.isHidden = true
+            self.loadingView.stopAnimating()
+            self.errorView.isHidden = true
+
+            switch state {
+            case .loading:
+                self.loadingView.startAnimating()
+            case .success(let movie, let isFavorite):
+                self.configure(with: movie, isFavorite: isFavorite)
+                self.scrollView.isHidden = false
+                self.backdropImageView.isHidden = false
+            case .error(let message):
+                self.errorMessageLabel.text = message
+                self.errorView.isHidden = false
+            }
+        }
+    }
+
+    private func configure(with movie: Movie, isFavorite: Bool) {
         titleLabel.text = movie.title
         originalTitleLabel.text = "Original: \(movie.originalTitle ?? "N/A")"
         ratingLabel.text = "★ \(String(format: "%.1f", movie.voteAverage))"
@@ -189,15 +226,6 @@ class MovieDetailView: UIView, MovieDetailViewProtocol {
         formatter.currencySymbol = "$"
         formatter.maximumFractionDigits = 0
         return formatter.string(from: NSNumber(value: value)) ?? "N/A"
-    }
-        
-    func showError(message: String) {
-        scrollView.isHidden = true
-        backdropImageView.isHidden = true
-        
-        errorMessageLabel.text = message
-        errorMessageLabel.isHidden = false
-        errorView.isHidden = false
     }
 }
 

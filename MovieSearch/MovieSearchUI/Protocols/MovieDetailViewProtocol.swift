@@ -12,6 +12,5 @@ protocol MovieDetailViewProtocol: UIView {
     var delegate: MovieDetailViewDelegate? { get set }
     
     func updateImage(with data: Data?)
-    func configure(with movie: Movie, isFavorite: Bool)
-    func showError(message: String)
+    func updateState(_ state: MovieDetailView.MovieDetailViewState)
 }
