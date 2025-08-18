@@ -38,8 +38,8 @@ final class MovieDetailsViewModel: MovieDetailsViewModelProtocol {
                 self.currentMovie = movieDetails
                 self.delegate?.didFetch(movieDetails)
                 if let backdropPath = movieDetails.backdropPath {
-                    self.fetchImageData(from: backdropPath) { imageData in
-                        self.delegate?.didFetch(imageData)
+                    self.fetchImageData(from: backdropPath) { [weak self] imageData in
+                        self?.delegate?.didFetch(imageData)
                     }
                 }
             case .failure(let error):

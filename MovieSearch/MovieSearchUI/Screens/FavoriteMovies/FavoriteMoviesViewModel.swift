@@ -44,6 +44,6 @@ class FavoriteMoviesViewModel: FavoriteMoviesViewModelProtocol {
     }
     
     func openMovieDetails(with movieId: Int) {
-        coordinatorDelegate?.showMovieDetailsViewController(with: movieId)
+        coordinatorDelegate?.showMovieDetailsViewController(with: movieId, updateDelegate: nil)
     }
 }

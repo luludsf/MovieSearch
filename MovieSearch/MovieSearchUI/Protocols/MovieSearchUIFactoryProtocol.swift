@@ -7,7 +7,7 @@
 
 protocol MovieSearchUIFactoryProtocol {
     func makeFavoriteMoviesViewController(delegate: CoordinatorDelegate?) -> FavoriteMoviesViewController
-    func makeMovieDetailsViewController(movieId: Int, updateDelegate: MovieSearchResultViewControllerUpdateDelegate) -> MovieDetailsViewController
+    func makeMovieDetailsViewController(movieId: Int, updateDelegate: MovieSearchResultViewControllerUpdateDelegate?) -> MovieDetailsViewController
     func makeMovieSearchViewController(delegate: CoordinatorDelegate?) -> MovieSearchViewController
     func makeMovieSearchResultViewController(textToSearch: String, delegate: CoordinatorDelegate?) -> MovieSearchResultViewController
 }

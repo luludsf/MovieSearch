@@ -51,8 +51,10 @@ extension MovieSearchResultViewController: MovieSearchResultViewModelDelegate {
     }
     
     func didFailWithError(_ message: String) {
-        self.contentView.updateState(.loading(false))
-        self.contentView.updateState(.error(message))
+        DispatchQueue.main.async { [weak self] in
+            self?.contentView.updateState(.loading(false))
+            self?.contentView.updateState(.error(message))
+        }
     }
 }
 
@@ -71,8 +73,8 @@ extension MovieSearchResultViewController: MoviesGridViewDelegate {
     }
     
     func getImageData(from url: String, completion: @escaping (Data?) -> Void) {
-        DispatchQueue.main.async {
-            self.viewModel.fetchImageData(from: url) { imageData in
+        DispatchQueue.main.async { [weak self] in
+            self?.viewModel.fetchImageData(from: url) { imageData in
                 completion(imageData)
             }
         }

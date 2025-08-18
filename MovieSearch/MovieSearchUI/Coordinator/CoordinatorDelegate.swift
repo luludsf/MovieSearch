@@ -7,10 +7,10 @@
 
 protocol CoordinatorDelegate: AnyObject {
     func showMovieSearchResultsViewController(with textToSearch: String)
-    func showMovieDetailsViewController(with movieId: Int, updateDelegate: MovieSearchResultViewControllerUpdateDelegate)
+    func showMovieDetailsViewController(with movieId: Int, updateDelegate: MovieSearchResultViewControllerUpdateDelegate?)
 }
 
 extension CoordinatorDelegate {
     func showMovieSearchResultsViewController(with textToSearch: String) { }
-    func showMovieDetailsViewController(with movieId: Int) { }
+    func showMovieDetailsViewController(with movieId: Int, updateDelegate: MovieSearchResultViewControllerUpdateDelegate?) { }
 }
