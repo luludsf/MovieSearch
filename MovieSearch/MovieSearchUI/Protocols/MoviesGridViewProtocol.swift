@@ -9,5 +9,6 @@ import UIKit
 
 protocol MoviesGridViewProtocol: UIView {
     var delegate: MoviesGridViewDelegate? { get set }
+    var messageLabelText: String? { get set }
     func updateState(_ state: MovieViewState)
 }

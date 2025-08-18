@@ -19,6 +19,7 @@ class MovieSearchResultViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self
         self.contentView.delegate = self
+        self.contentView.messageLabelText = "Nenhum filme foi encontrado pela sua pesquisa"
     }
     
     override func loadView() {

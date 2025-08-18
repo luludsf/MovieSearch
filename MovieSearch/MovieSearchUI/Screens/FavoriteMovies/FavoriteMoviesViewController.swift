@@ -17,6 +17,7 @@ class FavoriteMoviesViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.contentView.delegate = self
+        self.contentView.messageLabelText = "Não há filmes favoritos salvos"
     }
     
     required init?(coder: NSCoder) {
@@ -54,10 +55,6 @@ class FavoriteMoviesViewController: UIViewController {
 }
 
 extension FavoriteMoviesViewController: MoviesGridViewDelegate {
-    
-    func getNextPage() {
-        
-    }
 
     func getImageData(from url: String, shouldIgnoreCache: Bool, completion: @escaping (Data?) -> Void) {
         DispatchQueue.main.async {
@@ -86,4 +83,7 @@ extension FavoriteMoviesViewController: MoviesGridViewDelegate {
     func openMovieDetails(with movieId: Int) {
         viewModel.openMovieDetails(with: movieId)
     }
+    
+    
+    func getNextPage() { }
 }

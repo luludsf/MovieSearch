@@ -50,6 +50,7 @@ class MoviesGridView: UIView, MoviesGridViewProtocol {
         return indicator
     }()
     
+    var messageLabelText: String?
     private var movies: [Movie] = []
     private var hasMorePages = false
     
@@ -114,7 +115,7 @@ class MoviesGridView: UIView, MoviesGridViewProtocol {
     }
     
     func setEmptyState(isEmpty: Bool) {
-        messageLabel.text = "Nenhum filme foi encontrado pela sua pesquisa"
+        messageLabel.text = messageLabelText
         collectionView.isHidden = isEmpty
         messageLabel.isHidden = !isEmpty
     }
