@@ -41,7 +41,8 @@ class FavoriteMoviesViewController: UIViewController {
     
     private func fetchFavoriteMovies() {
         self.contentView.updateState(.loading(true))
-        viewModel.fetchAllFavoriteMovies { movies in
+        viewModel.fetchAllFavoriteMovies { [weak self] movies in
+            guard let self else { return }
             guard let movies else {
                 self.contentView.updateState(.loading(false))
                 self.contentView.updateState(.error(self.viewModel.errorMessage))

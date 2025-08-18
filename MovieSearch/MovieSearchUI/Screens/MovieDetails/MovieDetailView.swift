@@ -172,9 +172,9 @@ class MovieDetailView: UIView, MovieDetailViewProtocol {
     
     @objc private func didTapFavoriteButton() {
         favoriteButton.isSelected.toggle()
-        delegate?.didTapFavoriteButton(isFavorite: favoriteButton.isSelected) { success in
+        delegate?.didTapFavoriteButton(isFavorite: favoriteButton.isSelected) { [weak self] success in
             if !success {
-                self.favoriteButton.isSelected.toggle()
+                self?.favoriteButton.isSelected.toggle()
             }
         }
     }

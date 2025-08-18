@@ -46,8 +46,8 @@ extension MovieDetailsViewController: MovieDetailsViewModelDelegate {
     
     func didFetch(_ movie: Movie) {
         DispatchQueue.main.async {
-            self.viewModel.isFavoriteMovie { isFavorite in
-                self.contentView.updateState(.success(movie, isFavorite))
+            self.viewModel.isFavoriteMovie { [weak self] isFavorite in
+                self?.contentView.updateState(.success(movie, isFavorite))
             }
         }
     }
