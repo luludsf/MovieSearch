@@ -6,5 +6,5 @@
 //
 
 protocol MovieSearchUseCaseProtocol {
-    func execute(query: String, page: Int?, shouldIgnoreCache: Bool, completion: @escaping ((Result<MovieSearch, MovieSearchError>) -> Void))
+    func execute(query: String, page: Int?, completion: @escaping ((Result<MovieSearch, MovieSearchError>) -> Void))
 }

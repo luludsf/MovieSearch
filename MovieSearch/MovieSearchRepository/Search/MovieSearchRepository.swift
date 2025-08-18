@@ -15,10 +15,10 @@ final class MovieSearchRepository: MovieSearchRepositoryProtocol {
         self.networking = networking
     }
     
-    func getSearch(from query: String, page: Int?, shouldIgnoreCache: Bool, completion: @escaping (Result<MovieSearch, MovieSearchError>) -> Void) {
+    func getSearch(from query: String, page: Int?, completion: @escaping (Result<MovieSearch, MovieSearchError>) -> Void) {
         let request: MovieSearchRequest = .movieSearch(query: query, page: page)
         
-        networking.perform(request, shouldIgnoreCache: shouldIgnoreCache) { (result: Result<MovieSearchRespone, NetworkingError>) in
+        networking.perform(request) { (result: Result<MovieSearchRespone, NetworkingError>) in
             switch result {
             case .success(let movieSearchRespone):
                 let moviesResponses = movieSearchRespone.results?.map {
@@ -45,10 +45,10 @@ final class MovieSearchRepository: MovieSearchRepositoryProtocol {
         }
     }
     
-    func getMovieDetails(with id: Int, shouldIgnoreCache: Bool, completion: @escaping (Result<Movie, MovieSearchError>) -> Void) {
+    func getMovieDetails(with id: Int, completion: @escaping (Result<Movie, MovieSearchError>) -> Void) {
         let request: MovieSearchRequest = .movieDetails(id: id)
         
-        networking.perform(request, shouldIgnoreCache: shouldIgnoreCache) { (result: Result<MovieResponse, NetworkingError>) in
+        networking.perform(request) { (result: Result<MovieResponse, NetworkingError>) in
             switch result {
             case .success(let movieDetailsResponse):
                 let movieDetails = Movie(
@@ -71,10 +71,10 @@ final class MovieSearchRepository: MovieSearchRepositoryProtocol {
         }
     }
     
-    func getMovieImage(from url: String, with imageType: ImageType, shouldIgnoreCache: Bool, completion: @escaping (Result<Data?, MovieSearchError>) -> Void) {
+    func getMovieImage(from url: String, with imageType: ImageType, completion: @escaping (Result<Data?, MovieSearchError>) -> Void) {
         let request: MovieImageDownloadRequest = .movieImageDownload(url, imageType)
         
-        networking.perform(request, shouldIgnoreCache: shouldIgnoreCache) { (result: Result<Data, NetworkingError>) in
+        networking.perform(request) { (result: Result<Data, NetworkingError>) in
             switch result {
             case.success(let imageData):
                 completion(.success(imageData))

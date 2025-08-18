@@ -1,22 +1,32 @@
 //
-//  URLSessionClient.swift
-//  MovieSearch
+//  URLSessionClient.swift
+//  MovieSearch
 //
-//  Created by Luana Duarte on 14/08/25.
+//  Created by Luana Duarte on 14/08/25.
 //
 
 import Foundation
 
-
 final class URLSessionClient: Networking {
     
+    private let session: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        
+        configuration.urlCache = URLCache(
+            memoryCapacity: 50 * 1024 * 1024,
+            diskCapacity: 100 * 1024 * 1024,
+            directory: nil
+        )
+        configuration.requestCachePolicy = .useProtocolCachePolicy
+        
+        return URLSession(configuration: configuration)
+    }()
+        
     func perform<T>(
         _ request: Request,
-        shouldIgnoreCache: Bool = false,
         completion: @escaping (Result<T, NetworkingError>) -> Void
     ) where T : Decodable {
-        execute(request, shouldIgnoreCache: shouldIgnoreCache) { result in
-            
+        execute(request) { result in
             switch result {
             case .success(let data):
                 do {
@@ -35,10 +45,9 @@ final class URLSessionClient: Networking {
     
     func perform(
         _ request: Request,
-        shouldIgnoreCache: Bool = false,
         completion: @escaping (Result<Data, NetworkingError>) -> Void
     ) {
-        execute(request, shouldIgnoreCache: shouldIgnoreCache) { result in
+        execute(request) { result in
             switch result {
             case .success(let data):
                 completion(.success(data))
@@ -50,7 +59,6 @@ final class URLSessionClient: Networking {
     
     private func execute(
         _ request: Request,
-        shouldIgnoreCache: Bool = false,
         completion: @escaping (Result<Data, NetworkingError>) -> Void
     ) {
         var components = URLComponents()
@@ -61,7 +69,7 @@ final class URLSessionClient: Networking {
             components.queryItems = queryParams.map { URLQueryItem(name: $0.key, value: $0.value) }
         }
         
-        guard let urlFromComponents = components.url  else {
+        guard let urlFromComponents = components.url else {
             completion(.failure(.invalidURL))
             return
         }
@@ -71,9 +79,10 @@ final class URLSessionClient: Networking {
         urlRequest.allHTTPHeaderFields = request.headers
         urlRequest.timeoutInterval = 10
         
-        // TODO: Verificar cache
-        
-        urlRequest.cachePolicy = shouldIgnoreCache ? .reloadIgnoringLocalCacheData : .useProtocolCachePolicy
+        if let cachedData = fetchFromCache(for: urlRequest) {
+            completion(.success(cachedData))
+            return
+        }
         
         if let bodyDict = request.bodyParams {
             do {
@@ -85,8 +94,7 @@ final class URLSessionClient: Networking {
             }
         }
         
-        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-            
+        session.dataTask(with: urlRequest) { data, response, error in
             if let error = error as? URLError {
                 switch error.code {
                 case .notConnectedToInternet:
@@ -115,8 +123,13 @@ final class URLSessionClient: Networking {
                 completion(.failure(.invalidResponseData))
                 return
             }
+            
             completion(.success(data))
         }
         .resume()
+    }
+    
+    private func fetchFromCache(for request: URLRequest) -> Data? {
+        return session.configuration.urlCache?.cachedResponse(for: request)?.data
     }
 }

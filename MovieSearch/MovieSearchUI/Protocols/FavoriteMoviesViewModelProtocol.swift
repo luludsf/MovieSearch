@@ -11,7 +11,7 @@ protocol FavoriteMoviesViewModelProtocol {
     var coordinatorDelegate: CoordinatorDelegate? { get set }
     
     func openMovieDetails(with movieId: Int)
-    func fetchImageData(from url: String, shouldIgnoreCache: Bool, completion: @escaping (Data?) -> Void)
+    func fetchImageData(from url: String, completion: @escaping (Data?) -> Void)
     func deleteFavoriteMovie(_ movie: Movie, completion: @escaping (Bool) -> Void)
     func fetchAllFavoriteMovies(completion: @escaping ([Movie]?) -> Void)
     func fetchFavoriteMovie(movieId: Int, completion: @escaping (Bool) -> Void)

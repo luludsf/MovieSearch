@@ -31,14 +31,14 @@ final class MovieDetailsViewModel: MovieDetailsViewModelProtocol {
     }
     
     func fetchMovieDetails() {
-        movieDetailsUseCase.execute(id: movieId, shouldIgnoreCache: true) { [weak self] result in
+        movieDetailsUseCase.execute(id: movieId) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let movieDetails):
                 self.currentMovie = movieDetails
                 self.delegate?.didFetch(movieDetails)
                 if let backdropPath = movieDetails.backdropPath {
-                    self.fetchImageData(from: backdropPath, shouldIgnoreCache: true) { imageData in
+                    self.fetchImageData(from: backdropPath) { imageData in
                         self.delegate?.didFetch(imageData)
                     }
                 }
@@ -48,8 +48,8 @@ final class MovieDetailsViewModel: MovieDetailsViewModelProtocol {
         }
     }
     
-    func fetchImageData(from url: String, shouldIgnoreCache: Bool, completion: @escaping (Data?) -> Void) {
-        movieImageDownloadUseCase.getMovieImage(from: url, with: imageType, shouldIgnoreCache: shouldIgnoreCache) { result in
+    func fetchImageData(from url: String, completion: @escaping (Data?) -> Void) {
+        movieImageDownloadUseCase.getMovieImage(from: url, with: imageType) { result in
             switch result {
             case .success(let imageData):
                 completion(imageData)

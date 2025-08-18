@@ -42,7 +42,7 @@ final class MovieSearchResultViewModel: MovieSearchResultViewModelProtocol {
         
         self.query = query
         
-        movieSearchUseCase.execute(query: query, page: page, shouldIgnoreCache: true) { [weak self] result in
+        movieSearchUseCase.execute(query: query, page: page) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let movieSearch):
@@ -66,12 +66,11 @@ final class MovieSearchResultViewModel: MovieSearchResultViewModelProtocol {
         fetchSearchMovies(query: self.query, page: page + 1)
     }
     
-    func fetchImageData(from url: String, shouldIgnoreCache: Bool, completion: @escaping (Data?) -> Void) {
+    func fetchImageData(from url: String, completion: @escaping (Data?) -> Void) {
         
         movieImageDownloadUseCase.getMovieImage(
             from: url,
-            with: imageType,
-            shouldIgnoreCache: shouldIgnoreCache) { result in
+            with: imageType) { result in
                 switch result {
                 case .success(let imageData):
                     completion(imageData)

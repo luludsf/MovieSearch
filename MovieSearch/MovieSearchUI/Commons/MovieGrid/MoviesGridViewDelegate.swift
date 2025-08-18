@@ -10,7 +10,7 @@ import Foundation
 protocol MoviesGridViewDelegate: AnyObject {
     func getNextPage()
     func openMovieDetails(with movieId: Int)
-    func getImageData(from url: String, shouldIgnoreCache: Bool, completion: @escaping (Data?) -> Void)
+    func getImageData(from url: String, completion: @escaping (Data?) -> Void)
     func getFavorite(movie: Movie, completion: @escaping (Bool) -> Void)
     func didTapFavoriteButton(isFavorite: Bool, selectedMovie: Movie, completion: @escaping (Bool) -> Void)
 }

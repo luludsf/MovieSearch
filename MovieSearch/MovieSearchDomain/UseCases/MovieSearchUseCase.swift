@@ -13,8 +13,8 @@ class MovieSearchUseCase: MovieSearchUseCaseProtocol {
         self.repository = repository
     }
     
-    func execute(query: String, page: Int?, shouldIgnoreCache: Bool, completion: @escaping (Result<MovieSearch, MovieSearchError>) -> Void) {
-        repository.getSearch(from: query, page: page, shouldIgnoreCache: shouldIgnoreCache) { (result: Result<MovieSearch, MovieSearchError>) in
+    func execute(query: String, page: Int?, completion: @escaping (Result<MovieSearch, MovieSearchError>) -> Void) {
+        repository.getSearch(from: query, page: page) { (result: Result<MovieSearch, MovieSearchError>) in
             switch result {
             case .success(let search):
                 completion(.success(search))

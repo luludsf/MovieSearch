@@ -32,8 +32,8 @@ class FavoriteMoviesViewModel: FavoriteMoviesViewModelProtocol {
         favoritesManager.fetchFavoriteMovie(movieId: movieId, completion: completion)
     }
     
-    func fetchImageData(from url: String, shouldIgnoreCache: Bool, completion: @escaping (Data?) -> Void) {
-        movieImageDownloadUseCase.getMovieImage(from: url, with: imageType, shouldIgnoreCache: shouldIgnoreCache) { result in
+    func fetchImageData(from url: String, completion: @escaping (Data?) -> Void) {
+        movieImageDownloadUseCase.getMovieImage(from: url, with: imageType) { result in
             switch result {
             case .success(let imageData):
                 completion(imageData)

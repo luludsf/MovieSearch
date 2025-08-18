@@ -12,7 +12,7 @@ protocol MovieDetailsViewModelProtocol {
     var updateDelegate: MovieSearchResultViewControllerUpdateDelegate? { get set }
     
     func fetchMovieDetails()
-    func fetchImageData(from url: String, shouldIgnoreCache: Bool, completion: @escaping (Data?) -> Void)
+    func fetchImageData(from url: String, completion: @escaping (Data?) -> Void)
     func manageFavoriteMovie(isFavorite: Bool, completion: @escaping (Bool) -> Void)
     func isFavoriteMovie(completion: @escaping (Bool) -> Void)
 }

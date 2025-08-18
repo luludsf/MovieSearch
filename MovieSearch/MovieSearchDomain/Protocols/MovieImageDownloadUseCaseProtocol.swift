@@ -11,7 +11,6 @@ protocol MovieImageDownloadUseCaseProtocol {
     func getMovieImage(
         from url: String,
         with imageType: ImageType,
-        shouldIgnoreCache: Bool,
         completion: @escaping (Result<Data?, MovieSearchError>) -> Void
     )
 }

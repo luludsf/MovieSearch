@@ -53,7 +53,7 @@ final class MovieSearchRepositoryTests: XCTestCase {
         mockNetworking.shouldSucceed = true
         
         // When
-        sut.getSearch(from: "test", page: 1, shouldIgnoreCache: false) { result in
+        sut.getSearch(from: "test", page: 1) { result in
             // Then
             switch result {
             case .success(let movieSearch):
@@ -79,7 +79,7 @@ final class MovieSearchRepositoryTests: XCTestCase {
         mockNetworking.mockError = .httpError(code: 500)
         
         // When
-        sut.getSearch(from: "test", page: 1, shouldIgnoreCache: false) { result in
+        sut.getSearch(from: "test", page: 1) { result in
             // Then
             switch result {
             case .success:
@@ -106,7 +106,7 @@ final class MovieSearchRepositoryTests: XCTestCase {
         mockNetworking.shouldSucceed = true
         
         // When
-        sut.getSearch(from: "test", page: nil, shouldIgnoreCache: true) { result in
+        sut.getSearch(from: "test", page: nil) { result in
             // Then
             switch result {
             case .success(let movieSearch):
@@ -136,7 +136,7 @@ final class MovieSearchRepositoryTests: XCTestCase {
         mockNetworking.shouldSucceed = true
         
         // When
-        sut.getSearch(from: "test", page: 2, shouldIgnoreCache: false) { result in
+        sut.getSearch(from: "test", page: 2) { result in
             // Then
             switch result {
             case .success(let movieSearch):
@@ -172,7 +172,7 @@ final class MovieSearchRepositoryTests: XCTestCase {
         mockNetworking.shouldSucceed = true
         
         // When
-        sut.getMovieDetails(with: 123, shouldIgnoreCache: true) { result in
+        sut.getMovieDetails(with: 123) { result in
             // Then
             switch result {
             case .success(let movie):
@@ -198,7 +198,7 @@ final class MovieSearchRepositoryTests: XCTestCase {
         mockNetworking.mockError = .noInternetConnection
         
         // When
-        sut.getMovieDetails(with: 123, shouldIgnoreCache: false) { result in
+        sut.getMovieDetails(with: 123) { result in
             // Then
             switch result {
             case .success:
@@ -222,7 +222,7 @@ final class MovieSearchRepositoryTests: XCTestCase {
         mockNetworking.shouldSucceed = true
         
         // When
-        sut.getMovieImage(from: "/test.jpg", with: .poster, shouldIgnoreCache: false) { result in
+        sut.getMovieImage(from: "/test.jpg", with: .poster) { result in
             // Then
             switch result {
             case .success(let data):
@@ -243,7 +243,7 @@ final class MovieSearchRepositoryTests: XCTestCase {
         mockNetworking.mockError = .timeout
         
         // When
-        sut.getMovieImage(from: "/test.jpg", with: .backdrop, shouldIgnoreCache: true) { result in
+        sut.getMovieImage(from: "/test.jpg", with: .backdrop) { result in
             // Then
             switch result {
             case .success:

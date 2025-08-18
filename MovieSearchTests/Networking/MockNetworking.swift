@@ -15,11 +15,9 @@ class MockNetworking: Networking {
     var mockImageData: Data?
     var mockError: NetworkingError?
     var request: Request?
-    var shouldIgnoreCache: Bool?
     
-    func perform<T>(_ request: Request, shouldIgnoreCache: Bool, completion: @escaping (Result<T, NetworkingError>) -> Void) where T : Decodable {
+    func perform<T>(_ request: Request, completion: @escaping (Result<T, NetworkingError>) -> Void) where T : Decodable {
         self.request = request
-        self.shouldIgnoreCache = shouldIgnoreCache
         
         if shouldSucceed {
             if let mockResponse = mockMovieSearchResponse as? T {
@@ -38,9 +36,8 @@ class MockNetworking: Networking {
         }
     }
     
-    func perform(_ request: Request, shouldIgnoreCache: Bool, completion: @escaping (Result<Data, NetworkingError>) -> Void) {
+    func perform(_ request: Request, completion: @escaping (Result<Data, NetworkingError>) -> Void) {
         self.request = request
-        self.shouldIgnoreCache = shouldIgnoreCache
         
         if shouldSucceed {
             if let data = mockImageData {

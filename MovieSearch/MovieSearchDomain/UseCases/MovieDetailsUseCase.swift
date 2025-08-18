@@ -13,8 +13,8 @@ class MovieDetailsUseCase: MovieDetailsUseCaseProtocol {
         self.repository = repository
     }
     
-    func execute(id: Int, shouldIgnoreCache: Bool, completion: @escaping (Result<Movie, MovieSearchError>) -> Void) {
-        repository.getMovieDetails(with: id, shouldIgnoreCache: shouldIgnoreCache) { (result: Result<Movie, MovieSearchError>) in
+    func execute(id: Int, completion: @escaping (Result<Movie, MovieSearchError>) -> Void) {
+        repository.getMovieDetails(with: id) { (result: Result<Movie, MovieSearchError>) in
             switch result {
             case .success(let movieDetails):
                 completion(.success(movieDetails))

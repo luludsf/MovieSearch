@@ -56,11 +56,10 @@ class FavoriteMoviesViewController: UIViewController {
 
 extension FavoriteMoviesViewController: MoviesGridViewDelegate {
 
-    func getImageData(from url: String, shouldIgnoreCache: Bool, completion: @escaping (Data?) -> Void) {
+    func getImageData(from url: String, completion: @escaping (Data?) -> Void) {
         DispatchQueue.main.async {
             self.viewModel.fetchImageData(
                 from: url,
-                shouldIgnoreCache: shouldIgnoreCache,
                 completion: completion
             )
         }

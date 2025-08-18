@@ -149,7 +149,7 @@ extension MoviesGridView: UICollectionViewDataSource {
         }
         
         if let imageURL = movie.posterPath {
-            delegate?.getImageData(from: imageURL, shouldIgnoreCache: false) { imageData in
+            delegate?.getImageData(from: imageURL) { imageData in
                 DispatchQueue.main.async() {
                     if let imageData,
                        let image = UIImage(data: imageData),
