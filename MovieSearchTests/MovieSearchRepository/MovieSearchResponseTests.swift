@@ -16,14 +16,14 @@ final class MovieSearchResponseTests: XCTestCase {
         {
             "results": [
                 {
-                    "id": 1,
-                    "original_title": "Movie 1",
-                    "poster_path": "/poster1.jpg",
-                    "vote_average": 8.0,
-                    "backdrop_path": "/backdrop1.jpg",
-                    "title": "Movie 1",
-                    "overview": "Overview 1",
-                    "release_date": "2023-01-01",
+                    "id": 198884,
+                    "original_title": "Barbie and The Sensations: Rockin' Back to Earth",
+                    "poster_path": "/vUCqvymxUwYxp9H6jw5R5UiaeE5.jpg",
+                    "vote_average": 7.5,
+                    "backdrop_path": "/ijfPu1IaDjy1PPUMh57PihHlRYf.jpg",
+                    "title": "Barbie and the Sensations: Rockin' Back to Earth",
+                    "overview": "Following their concert for world peace in outer space, Barbie and her band the Rockers are going back home. During the trip back to Earth, the band's space shuttle inadvertently enters a time warp. Upon landing at an airport, they meet Dr. Merrihew and his daughter Kim and soon learn that they have been transported back to 1959. The band then decides to go on a tour around the city alongside Kim. After a performance at Cape Canaveral, Dr. Merrihew helps Barbie and the Rockers return to their time. Back in the present, they stage a big concert in New York City, where Barbie is reunited with an adult Kim and introduced to her daughter Megan.",
+                    "release_date": "1987-09-27",
                     "budget": 1000000,
                     "revenue": 5000000
                 }

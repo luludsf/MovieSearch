@@ -33,14 +33,14 @@ final class MovieSearchRepositoryTests: XCTestCase {
         let mockResponse = MovieSearchRespone(
             results: [
                 MovieResponse(
-                    id: 1,
-                    originalTitle: "Test Movie",
-                    posterPath: "/test.jpg",
-                    voteAverage: 8.5,
-                    backdropPath: "/backdrop.jpg",
-                    title: "Test Movie",
-                    overview: "Test overview",
-                    releaseDate: "2023-01-01",
+                    id: 198884,
+                    originalTitle: "Barbie and The Sensations: Rockin' Back to Earth",
+                    posterPath: "/vUCqvymxUwYxp9H6jw5R5UiaeE5.jpg",
+                    voteAverage: 7.5,
+                    backdropPath: "/ijfPu1IaDjy1PPUMh57PihHlRYf.jpg",
+                    title: "Barbie and the Sensations: Rockin' Back to Earth",
+                    overview: "Following their concert for world peace in outer space, Barbie and her band the Rockers are going back home. During the trip back to Earth, the band's space shuttle inadvertently enters a time warp. Upon landing at an airport, they meet Dr. Merrihew and his daughter Kim and soon learn that they have been transported back to 1959. The band then decides to go on a tour around the city alongside Kim. After a performance at Cape Canaveral, Dr. Merrihew helps Barbie and the Rockers return to their time. Back in the present, they stage a big concert in New York City, where Barbie is reunited with an adult Kim and introduced to her daughter Megan.",
+                    releaseDate: "1987-09-27",
                     budget: 1000000,
                     revenue: 5000000
                 )
@@ -58,8 +58,8 @@ final class MovieSearchRepositoryTests: XCTestCase {
             switch result {
             case .success(let movieSearch):
                 XCTAssertEqual(movieSearch.results?.count, 1)
-                XCTAssertEqual(movieSearch.results?.first?.id, 1)
-                XCTAssertEqual(movieSearch.results?.first?.title, "Test Movie")
+                XCTAssertEqual(movieSearch.results?.first?.id, 198884)
+                XCTAssertEqual(movieSearch.results?.first?.title, "Barbie and the Sensations: Rockin' Back to Earth")
                 XCTAssertEqual(movieSearch.page, 1)
                 XCTAssertEqual(movieSearch.totalPages, 1)
                 XCTAssertEqual(movieSearch.totalResults, 1)
@@ -157,31 +157,31 @@ final class MovieSearchRepositoryTests: XCTestCase {
         // Given
         let expectation = XCTestExpectation(description: "Succeso ao capturar MovieDetails")
         let mockResponse = MovieResponse(
-            id: 123,
-            originalTitle: "Original Title",
-            posterPath: "/poster.jpg",
-            voteAverage: 9.0,
-            backdropPath: "/backdrop.jpg",
-            title: "English Title",
-            overview: "Movie overview",
-            releaseDate: "2023-12-25",
-            budget: 5000000,
-            revenue: 10000000
+            id: 198884,
+            originalTitle: "Barbie and The Sensations: Rockin' Back to Earth",
+            posterPath: "/vUCqvymxUwYxp9H6jw5R5UiaeE5.jpg",
+            voteAverage: 7.5,
+            backdropPath: "/ijfPu1IaDjy1PPUMh57PihHlRYf.jpg",
+            title: "Barbie and the Sensations: Rockin' Back to Earth",
+            overview: "Following their concert for world peace in outer space, Barbie and her band the Rockers are going back home. During the trip back to Earth, the band's space shuttle inadvertently enters a time warp. Upon landing at an airport, they meet Dr. Merrihew and his daughter Kim and soon learn that they have been transported back to 1959. The band then decides to go on a tour around the city alongside Kim. After a performance at Cape Canaveral, Dr. Merrihew helps Barbie and the Rockers return to their time. Back in the present, they stage a big concert in New York City, where Barbie is reunited with an adult Kim and introduced to her daughter Megan.",
+            releaseDate: "1987-09-27",
+            budget: 1000000,
+            revenue: 5000000
         )
         mockNetworking.mockMovieResponse = mockResponse
         mockNetworking.shouldSucceed = true
         
         // When
-        sut.getMovieDetails(with: 123) { result in
+        sut.getMovieDetails(with: 198884) { result in
             // Then
             switch result {
             case .success(let movie):
-                XCTAssertEqual(movie.id, 123)
-                XCTAssertEqual(movie.originalTitle, "Original Title")
-                XCTAssertEqual(movie.title, "English Title")
-                XCTAssertEqual(movie.voteAverage, 9.0)
-                XCTAssertEqual(movie.budget, 5000000)
-                XCTAssertEqual(movie.revenue, 10000000)
+                XCTAssertEqual(movie.id, 198884)
+                XCTAssertEqual(movie.originalTitle, "Barbie and The Sensations: Rockin' Back to Earth")
+                XCTAssertEqual(movie.title, "Barbie and the Sensations: Rockin' Back to Earth")
+                XCTAssertEqual(movie.voteAverage, 7.5)
+                XCTAssertEqual(movie.budget, 1000000)
+                XCTAssertEqual(movie.revenue, 5000000)
             case .failure:
                 XCTFail("getMovies não deveria falhar")
             }
@@ -198,7 +198,7 @@ final class MovieSearchRepositoryTests: XCTestCase {
         mockNetworking.mockError = .noInternetConnection
         
         // When
-        sut.getMovieDetails(with: 123) { result in
+        sut.getMovieDetails(with: 198884) { result in
             // Then
             switch result {
             case .success:

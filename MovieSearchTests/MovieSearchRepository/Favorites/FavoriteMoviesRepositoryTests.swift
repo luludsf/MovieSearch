@@ -31,14 +31,14 @@ final class FavoriteMoviesRepositoryTests: XCTestCase {
         // Given
         let expectation = XCTestExpectation(description: "Favorito salvo")
         let movie = Movie(
-            id: 1,
-            originalTitle: "Test Movie",
-            posterPath: "/test.jpg",
-            voteAverage: 8.5,
-            backdropPath: "/backdrop.jpg",
-            title: "Test Movie",
-            overview: "Test overview",
-            releaseDate: "2023-01-01",
+            id: 198884,
+            originalTitle: "Barbie and The Sensations: Rockin' Back to Earth",
+            posterPath: "/vUCqvymxUwYxp9H6jw5R5UiaeE5.jpg",
+            voteAverage: 7.5,
+            backdropPath: "/ijfPu1IaDjy1PPUMh57PihHlRYf.jpg",
+            title: "Barbie and the Sensations: Rockin' Back to Earth",
+            overview: "Following their concert for world peace in outer space, Barbie and her band the Rockers are going back home. During the trip back to Earth, the band's space shuttle inadvertently enters a time warp. Upon landing at an airport, they meet Dr. Merrihew and his daughter Kim and soon learn that they have been transported back to 1959. The band then decides to go on a tour around the city alongside Kim. After a performance at Cape Canaveral, Dr. Merrihew helps Barbie and the Rockers return to their time. Back in the present, they stage a big concert in New York City, where Barbie is reunited with an adult Kim and introduced to her daughter Megan.",
+            releaseDate: "1987-09-27",
             budget: 1000000,
             revenue: 5000000
         )
@@ -49,8 +49,8 @@ final class FavoriteMoviesRepositoryTests: XCTestCase {
             // Then
             XCTAssertTrue(success)
             XCTAssertEqual(self.mockService.savedMovies.count, 1)
-            XCTAssertEqual(self.mockService.savedMovies.first?.id, 1)
-            XCTAssertEqual(self.mockService.savedMovies.first?.title, "Test Movie")
+            XCTAssertEqual(self.mockService.savedMovies.first?.id, 198884)
+            XCTAssertEqual(self.mockService.savedMovies.first?.title, "Barbie and the Sensations: Rockin' Back to Earth")
             expectation.fulfill()
         }
         
@@ -61,14 +61,14 @@ final class FavoriteMoviesRepositoryTests: XCTestCase {
         // Given
         let expectation = XCTestExpectation(description: "Filme não salvo")
         let movie = Movie(
-            id: 1,
-            originalTitle: "Test Movie",
-            posterPath: "/test.jpg",
-            voteAverage: 8.5,
-            backdropPath: "/backdrop.jpg",
-            title: "Test Movie",
-            overview: "Test overview",
-            releaseDate: "2023-01-01",
+            id: 198884,
+            originalTitle: "Barbie and The Sensations: Rockin' Back to Earth",
+            posterPath: "/vUCqvymxUwYxp9H6jw5R5UiaeE5.jpg",
+            voteAverage: 7.5,
+            backdropPath: "/ijfPu1IaDjy1PPUMh57PihHlRYf.jpg",
+            title: "Barbie and the Sensations: Rockin' Back to Earth",
+            overview: "Following their concert for world peace in outer space, Barbie and her band the Rockers are going back home. During the trip back to Earth, the band's space shuttle inadvertently enters a time warp. Upon landing at an airport, they meet Dr. Merrihew and his daughter Kim and soon learn that they have been transported back to 1959. The band then decides to go on a tour around the city alongside Kim. After a performance at Cape Canaveral, Dr. Merrihew helps Barbie and the Rockers return to their time. Back in the present, they stage a big concert in New York City, where Barbie is reunited with an adult Kim and introduced to her daughter Megan.",
+            releaseDate: "1987-09-27",
             budget: 1000000,
             revenue: 5000000
         )
@@ -90,14 +90,14 @@ final class FavoriteMoviesRepositoryTests: XCTestCase {
         // Given
         let expectation = XCTestExpectation(description: "Filme deletado")
         let movie = Movie(
-            id: 1,
-            originalTitle: "Test Movie",
-            posterPath: "/test.jpg",
-            voteAverage: 8.5,
-            backdropPath: "/backdrop.jpg",
-            title: "Test Movie",
-            overview: "Test overview",
-            releaseDate: "2023-01-01",
+            id: 198884,
+            originalTitle: "Barbie and The Sensations: Rockin' Back to Earth",
+            posterPath: "/vUCqvymxUwYxp9H6jw5R5UiaeE5.jpg",
+            voteAverage: 7.5,
+            backdropPath: "/ijfPu1IaDjy1PPUMh57PihHlRYf.jpg",
+            title: "Barbie and the Sensations: Rockin' Back to Earth",
+            overview: "Following their concert for world peace in outer space, Barbie and her band the Rockers are going back home. During the trip back to Earth, the band's space shuttle inadvertently enters a time warp. Upon landing at an airport, they meet Dr. Merrihew and his daughter Kim and soon learn that they have been transported back to 1959. The band then decides to go on a tour around the city alongside Kim. After a performance at Cape Canaveral, Dr. Merrihew helps Barbie and the Rockers return to their time. Back in the present, they stage a big concert in New York City, where Barbie is reunited with an adult Kim and introduced to her daughter Megan.",
+            releaseDate: "1987-09-27",
             budget: 1000000,
             revenue: 5000000
         )
@@ -108,7 +108,7 @@ final class FavoriteMoviesRepositoryTests: XCTestCase {
             // Then
             XCTAssertTrue(success)
             XCTAssertEqual(self.mockService.deletedMovies.count, 1)
-            XCTAssertEqual(self.mockService.deletedMovies.first?.id, 1)
+            XCTAssertEqual(self.mockService.deletedMovies.first?.id, 198884)
             expectation.fulfill()
         }
         
@@ -119,14 +119,14 @@ final class FavoriteMoviesRepositoryTests: XCTestCase {
         // Given
         let expectation = XCTestExpectation(description: "Filme nõa deletado")
         let movie = Movie(
-            id: 1,
-            originalTitle: "Test Movie",
-            posterPath: "/test.jpg",
-            voteAverage: 8.5,
-            backdropPath: "/backdrop.jpg",
-            title: "Test Movie",
-            overview: "Test overview",
-            releaseDate: "2023-01-01",
+            id: 198884,
+            originalTitle: "Barbie and The Sensations: Rockin' Back to Earth",
+            posterPath: "/vUCqvymxUwYxp9H6jw5R5UiaeE5.jpg",
+            voteAverage: 7.5,
+            backdropPath: "/ijfPu1IaDjy1PPUMh57PihHlRYf.jpg",
+            title: "Barbie and the Sensations: Rockin' Back to Earth",
+            overview: "Following their concert for world peace in outer space, Barbie and her band the Rockers are going back home. During the trip back to Earth, the band's space shuttle inadvertently enters a time warp. Upon landing at an airport, they meet Dr. Merrihew and his daughter Kim and soon learn that they have been transported back to 1959. The band then decides to go on a tour around the city alongside Kim. After a performance at Cape Canaveral, Dr. Merrihew helps Barbie and the Rockers return to their time. Back in the present, they stage a big concert in New York City, where Barbie is reunited with an adult Kim and introduced to her daughter Megan.",
+            releaseDate: "1987-09-27",
             budget: 1000000,
             revenue: 5000000
         )
@@ -149,28 +149,28 @@ final class FavoriteMoviesRepositoryTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Filmes encontrados")
         let mockMovieObjects = [
             MovieObject(
-                id: 1,
-                originalTitle: "Movie 1",
-                posterPath: "/poster1.jpg",
-                voteAverage: 8.0,
-                backdropPath: "/backdrop1.jpg",
-                title: "Movie 1",
-                overview: "Overview 1",
-                releaseDate: "2023-01-01",
+                id: 198884,
+                originalTitle: "Barbie and The Sensations: Rockin' Back to Earth",
+                posterPath: "/vUCqvymxUwYxp9H6jw5R5UiaeE5.jpg",
+                voteAverage: 7.5,
+                backdropPath: "/ijfPu1IaDjy1PPUMh57PihHlRYf.jpg",
+                title: "Barbie and the Sensations: Rockin' Back to Earth",
+                overview: "Following their concert for world peace in outer space, Barbie and her band the Rockers are going back home. During the trip back to Earth, the band's space shuttle inadvertently enters a time warp. Upon landing at an airport, they meet Dr. Merrihew and his daughter Kim and soon learn that they have been transported back to 1959. The band then decides to go on a tour around the city alongside Kim. After a performance at Cape Canaveral, Dr. Merrihew helps Barbie and the Rockers return to their time. Back in the present, they stage a big concert in New York City, where Barbie is reunited with an adult Kim and introduced to her daughter Megan.",
+                releaseDate: "1987-09-27",
                 budget: 1000000,
                 revenue: 5000000
             ),
             MovieObject(
-                id: 2,
-                originalTitle: "Movie 2",
-                posterPath: "/poster2.jpg",
-                voteAverage: 7.5,
-                backdropPath: "/backdrop2.jpg",
-                title: "Movie 2",
-                overview: "Overview 2",
-                releaseDate: "2023-02-01",
+                id: 973042,
+                originalTitle: "Max Steel: Turbo Charged",
+                posterPath: "/566jQXMLiYm1G2JEMOCiaSFM3Ad.jpg",
+                voteAverage: 0,
+                backdropPath: "/2cFk2AHymCALBaBfi8R2JWNmt1W.jpg",
+                title: "Max Steel: Turbo Charged",
+                overview: "Max must master an all-new, more powerful form of turbo energy if he wants to defeat Terrorax.",
+                releaseDate: "2017-03-18",
                 budget: 2000000,
-                revenue: 8000000
+                revenue: 1000000
             )
         ]
         mockService.favoriteMovies = mockMovieObjects
@@ -181,10 +181,10 @@ final class FavoriteMoviesRepositoryTests: XCTestCase {
             // Then
             XCTAssertNotNil(movies)
             XCTAssertEqual(movies?.count, 2)
-            XCTAssertEqual(movies?.first?.id, 1)
-            XCTAssertEqual(movies?.first?.title, "Movie 1")
-            XCTAssertEqual(movies?.last?.id, 2)
-            XCTAssertEqual(movies?.last?.title, "Movie 2")
+            XCTAssertEqual(movies?.first?.id, 198884)
+            XCTAssertEqual(movies?.first?.title, "Barbie and the Sensations: Rockin' Back to Earth")
+            XCTAssertEqual(movies?.last?.id, 973042)
+            XCTAssertEqual(movies?.last?.title, "Max Steel: Turbo Charged")
             expectation.fulfill()
         }
         
@@ -214,7 +214,7 @@ final class FavoriteMoviesRepositoryTests: XCTestCase {
         mockService.shouldSucceed = true
         
         // When
-        sut.fetchFavoriteMovie(id: 1) { isFavorite in
+        sut.fetchFavoriteMovie(id: 198884) { isFavorite in
             // Then
             XCTAssertTrue(isFavorite)
             expectation.fulfill()
@@ -229,7 +229,7 @@ final class FavoriteMoviesRepositoryTests: XCTestCase {
         mockService.shouldSucceed = false
         
         // When
-        sut.fetchFavoriteMovie(id: 1) { isFavorite in
+        sut.fetchFavoriteMovie(id: 198884) { isFavorite in
             // Then
             XCTAssertFalse(isFavorite)
             expectation.fulfill()
