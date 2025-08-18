@@ -8,9 +8,7 @@
 import UIKit
 
 class MovieSearchViewController: UIViewController {
-    
-    // MARK: - Properties
-    
+        
     private var searchView: MovieSearchViewProtocol
     private var viewModel: MovieSearchViewModelProtocol
     
@@ -25,8 +23,6 @@ class MovieSearchViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    // MARK: - Lifecycle
     
     override func loadView() {
         view = searchView

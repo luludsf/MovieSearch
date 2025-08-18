@@ -10,9 +10,7 @@ import UIKit
 class MovieSearchView: UIView, MovieSearchViewProtocol {
     
     weak var delegate: MovieSearchViewDelegate?
-    
-    // MARK: - UI Components
-    
+        
     private lazy var searchStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [searchTextField, searchButton])
         stackView.axis = .vertical
@@ -38,9 +36,7 @@ class MovieSearchView: UIView, MovieSearchViewProtocol {
         button.isEnabled = false
         return button
     }()
-    
-    // MARK: - Initializers
-    
+        
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -50,8 +46,6 @@ class MovieSearchView: UIView, MovieSearchViewProtocol {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - View Setup
     
     private func setupView() {
         backgroundColor = .systemBackground
@@ -65,9 +59,7 @@ class MovieSearchView: UIView, MovieSearchViewProtocol {
         searchTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
         searchButton.addTarget(self, action: #selector(didTapSearchButton), for: .touchUpInside)
     }
-    
-    // MARK: - Constraints
-    
+        
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             searchStackView.centerXAnchor.constraint(equalTo: centerXAnchor),

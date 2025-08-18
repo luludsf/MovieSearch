@@ -121,7 +121,6 @@ class MoviesGridView: UIView, MoviesGridViewProtocol {
     }
 }
 
-// MARK: - UICollectionViewDataSource
 extension MoviesGridView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -164,7 +163,6 @@ extension MoviesGridView: UICollectionViewDataSource {
     }
 }
 
-// MARK: - UICollectionViewDelegate
 extension MoviesGridView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -179,7 +177,6 @@ extension MoviesGridView: UICollectionViewDelegate {
     }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
 extension MoviesGridView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width - (8 * 2) - 8

@@ -8,8 +8,6 @@
 import UIKit
 import SwiftData
 
-// MARK: - Coordinator Principal
-
 class Coordinator: CoordinatorProtocol {
     
     var navigationController: UINavigationController
