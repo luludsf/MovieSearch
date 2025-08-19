@@ -60,8 +60,7 @@ extension MovieSearchResultViewController: MovieSearchResultViewModelDelegate {
 
 extension MovieSearchResultViewController: MoviesGridViewDelegate {
     func fetchMovies() {
-        self.contentView.updateState(.loading(true))
-        viewModel.fetchSearchMovies(query: viewModel.query, page: nil)
+        fetch()
     }
     
     func didTapFavoriteButton(isFavorite: Bool, selectedMovie: Movie, completion: @escaping (Bool) -> Void) {

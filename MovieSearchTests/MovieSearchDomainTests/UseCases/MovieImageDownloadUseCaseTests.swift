@@ -58,7 +58,7 @@ final class MovieImageDownloadUseCaseTests: XCTestCase {
         sut.getMovieImage(from: "/test.jpg", with: .poster) { result in
             // Then
             switch result {
-            case .success(let data):
+            case .success:
                 XCTFail("getMovieImage não ser sucedido")
             case .failure(let error):
                 XCTAssertEqual(error, .serviceUnavailable)

@@ -67,6 +67,7 @@ final class MovieDetailsViewModel: MovieDetailsViewModelProtocol {
             if success {
                 self?.updateDelegate?.reloadView()
             }
+            completion(success)
         }
     }
     

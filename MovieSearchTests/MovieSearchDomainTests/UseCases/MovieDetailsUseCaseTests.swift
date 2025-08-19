@@ -74,7 +74,7 @@ final class MovieDetailsUseCaseTests: XCTestCase {
         sut.execute(id: 198884) { result in
             // Then
             switch result {
-            case .success(let movie):
+            case .success:
                 XCTFail("getMovieDetailsUseCase não deveria ser sucesso")
             case .failure(let error):
                 XCTAssertEqual(error, .serviceUnavailable)
