@@ -83,13 +83,13 @@ class MovieCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        imageView.image = UIImage(systemName: UIStrings.Icons.movieClapper)
-        updateImageViewAppearance(isPlaceholder: true)
-        titleLabel.text = nil
-        ratingLabel.text = nil
-    }
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//        imageView.image = UIImage(systemName: UIStrings.Icons.movieClapper)
+//        updateImageViewAppearance(isPlaceholder: true)
+//        titleLabel.text = nil
+//        ratingLabel.text = nil
+//    }
     
     private func setupViews() {
         
