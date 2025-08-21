@@ -119,6 +119,10 @@ class MoviesGridView: UIView, MoviesGridViewProtocol {
         collectionView.isHidden = isEmpty
         messageLabel.isHidden = !isEmpty
     }
+    
+    private func correctCell(_ indexPath: IndexPath) -> MovieCell? {
+        return collectionView.cellForItem(at: indexPath) as? MovieCell
+    }
 }
 
 extension MoviesGridView: UICollectionViewDataSource {
@@ -134,31 +138,34 @@ extension MoviesGridView: UICollectionViewDataSource {
         
         let movie = movies[indexPath.item]
         cell.configure(with: movie)
-        delegate?.getFavorite(movie: movie) { isFavorite in
-            cell.updateFavoriteState(isFavorite: isFavorite)
-        }
-        
-        cell.didTapFavoriteButton = { [weak self] isFavorite in
-            self?.delegate?.didTapFavoriteButton(isFavorite: isFavorite, selectedMovie: movie) { movieWasDeleted in
-                cell.enableUserInteraction()
-                if !movieWasDeleted {
-                    cell.toggleFavoriteButton()
-                }
+        delegate?.getFavorite(movie: movie) { [weak self] isFavorite in
+            if let cellToUpdate = self?.correctCell(indexPath) {
+                cellToUpdate.updateFavoriteState(isFavorite: isFavorite)
             }
         }
         
-        if let imageURL = movie.posterPath {
-            delegate?.getImageData(from: imageURL) { imageData in
-                DispatchQueue.main.async() {
-                    if let imageData,
-                       let image = UIImage(data: imageData),
-                       let cellToUpdate = collectionView.cellForItem(at: indexPath) as? MovieCell {
-                        cellToUpdate.updateImage(with: image)
+        cell.didTapFavoriteButton = { [weak self] isFavorite in
+            self?.delegate?.didTapFavoriteButton(isFavorite: isFavorite, selectedMovie: movie) { [weak self] movieWasDeleted in
+                if let cellToUpdate = self?.correctCell(indexPath) {
+                    cellToUpdate.enableUserInteraction()
+                    if !movieWasDeleted {
+                        cellToUpdate.toggleFavoriteButton()
                     }
                 }
             }
         }
         
+        if let imageURL = movie.posterPath {
+            delegate?.getImageData(from: imageURL) { [weak self] imageData in
+                DispatchQueue.main.async() {
+                    if let imageData,
+                       let image = UIImage(data: imageData),
+                       let cellToUpdate = self?.correctCell(indexPath) {
+                        cellToUpdate.updateImage(with: image)
+                    }
+                }
+            }
+        }
         return cell
     }
 }
